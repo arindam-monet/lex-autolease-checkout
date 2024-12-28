@@ -4,7 +4,6 @@ import { useState } from 'react';
 import { PayWithRewards } from '@/components/rewards/PayWithRewards';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Button } from '@/components/ui/button';
-import { Lock } from 'lucide-react';
 import { SAMPLE_PRODUCT } from '@/lib/constants';
 
 export default function CheckoutPage() {
@@ -16,16 +15,8 @@ export default function CheckoutPage() {
   };
 
   return (
-    <div className="max-w-lg mx-auto pb-24"> {/* Added padding bottom for sticky button */}
-      <div className="flex items-center justify-between p-4 border-b">
-        <img src="/argos-logo.svg" alt="Argos" className="h-8" />
-        <div className="flex items-center text-gray-600">
-          <Lock className="w-4 h-4 mr-2" />
-          Secure Checkout
-        </div>
-      </div>
-
-      <div className="p-4 space-y-6">
+    <div className="max-w-lg mx-auto pb-2 h-screen">
+      <div className="p-4 space-y-6 min-h-screen">
         <div className="flex items-start space-x-4 p-4 bg-white rounded-lg shadow">
           <img
             src={SAMPLE_PRODUCT.image}
@@ -101,12 +92,6 @@ export default function CheckoutPage() {
             </div>
           </div>
         </div>
-      </div>
-
-      <div className="sticky-footer">
-        <Button className="w-full bg-[#00844F] hover:bg-[#006F42] text-white">
-          Proceed to Pay £{(cartTotal - (appliedReward || 0)).toFixed(2)}
-        </Button>
       </div>
     </div>
   );
