@@ -116,10 +116,6 @@ export default function CheckoutPage() {
                 <button className="text-blue-600">data sharing with Klarna</button>.
               </p>
             </div>
-            
-            <button onClick={handleProceedToPayment} className="w-full bg-green-600 hover:bg-green-700 text-white py-6">
-              Proceed to Pay £{total.toFixed(2)}
-            </button>
           </div>
         </div>
       </div>
