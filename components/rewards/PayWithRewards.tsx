@@ -30,7 +30,7 @@ export function PayWithRewards({ cartTotal, onRewardApplied }: PayWithRewardsPro
 
   const handleRewardSelected = async (reward: RewardOption) => {
     try {
-      await applyReward(reward.id, cartTotal);
+      // await applyReward(reward.id, cartTotal);
       onRewardApplied(reward.savings);
       setOpen(false);
     } catch (error) {

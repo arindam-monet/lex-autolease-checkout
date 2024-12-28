@@ -14,7 +14,7 @@ interface PhoneVerificationProps {
 
 export function PhoneVerification({ onVerified }: PhoneVerificationProps) {
   const [isLoading, setIsLoading] = useState(false);
-  
+
   const form = useForm({
     resolver: zodResolver(phoneNumberSchema),
     defaultValues: {
@@ -25,7 +25,7 @@ export function PhoneVerification({ onVerified }: PhoneVerificationProps) {
   const onSubmit = async (data: { phone: string }) => {
     setIsLoading(true);
     try {
-      await verifyPhone(data.phone);
+      // await verifyPhone(data.phone);
       onVerified(data.phone);
     } catch (error) {
       console.error(error);
@@ -43,9 +43,9 @@ export function PhoneVerification({ onVerified }: PhoneVerificationProps) {
           render={({ field }) => (
             <FormItem>
               <FormControl>
-                <Input 
-                  placeholder="Enter mobile number" 
-                  {...field} 
+                <Input
+                  placeholder="Enter mobile number"
+                  {...field}
                   type="tel"
                   className="text-lg"
                 />
