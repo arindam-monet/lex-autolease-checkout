@@ -25,7 +25,7 @@ export default function CartPage() {
             <div className="flex gap-4">
               <div className="flex-shrink-0">
                 <Image
-                  src="/placeholder.svg"
+                  src="/images/female-dress.webp"
                   alt="FINERY Kimmy Dress 22"
                   width={100}
                   height={100}
