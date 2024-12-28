@@ -24,7 +24,7 @@ export function PaymentOptions() {
             <div className="flex gap-2">
               <div className="w-10 h-6 relative">
                 <Image
-                  src="/placeholder.svg"
+                  src="/images/visa.svg"
                   alt="Visa"
                   fill
                   className="object-contain"
@@ -32,7 +32,7 @@ export function PaymentOptions() {
               </div>
               <div className="w-10 h-6 relative">
                 <Image
-                  src="/placeholder.svg"
+                  src="/images/mastercard.svg"
                   alt="Mastercard"
                   fill
                   className="object-contain"
@@ -40,7 +40,7 @@ export function PaymentOptions() {
               </div>
               <div className="w-10 h-6 relative">
                 <Image
-                  src="/placeholder.svg"
+                  src="/images/amex.svg"
                   alt="American Express"
                   fill
                   className="object-contain"
@@ -59,7 +59,7 @@ export function PaymentOptions() {
             </div>
             <div className="w-16 h-6 relative">
               <Image
-                src="/placeholder.svg"
+                src="/images/paypal.svg"
                 alt="PayPal"
                 fill
                 className="object-contain"
