@@ -1,98 +1,129 @@
-"use client";
+'use client'
 
-import { useState } from 'react';
-import { PayWithRewards } from '@/components/rewards/PayWithRewards';
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-import { Button } from '@/components/ui/button';
-import { SAMPLE_PRODUCT } from '@/lib/constants';
+import { useRouter } from "next/navigation"
+import { PaymentOptions } from "@/components/payment-options"
+import { PageContainer } from "@/components/layout/page-container"
+import { ProgressIndicator } from "@/components/progress-indicator"
+import { Home } from 'lucide-react'
 
 export default function CheckoutPage() {
-  const [cartTotal, setCartTotal] = useState(24.50);
-  const [appliedReward, setAppliedReward] = useState<number | null>(null);
+  const router = useRouter()
+  const total = 24.50
 
-  const handleRewardApplied = (savings: number) => {
-    setAppliedReward(savings);
-  };
+  const handleProceedToPayment = () => {
+    // Handle payment logic
+    console.log('Processing payment...')
+  }
 
   return (
-    <div className="max-w-lg mx-auto pb-2 h-screen">
-      <div className="p-4 space-y-6 min-h-screen">
-        <div className="flex items-start space-x-4 p-4 bg-white rounded-lg shadow">
-          <img
-            src={SAMPLE_PRODUCT.image}
-            alt={SAMPLE_PRODUCT.name}
-            className="w-20 h-20 object-cover rounded"
-          />
-          <div className="flex-1">
-            <h3 className="font-medium">{SAMPLE_PRODUCT.name}</h3>
-            <p className="text-sm text-gray-500">{SAMPLE_PRODUCT.id}</p>
-            <div className="mt-2">£{SAMPLE_PRODUCT.price.toFixed(2)}</div>
+    <PageContainer
+      variant="checkout"
+      showSearch={false}
+      total={total}
+      onProceed={handleProceedToPayment}
+    >
+      <ProgressIndicator />
+      
+      <div className="max-w-2xl mx-auto">
+        <h1 className="text-2xl font-bold mb-6">Confirm & pay</h1>
+        
+        <div className="space-y-6">
+          {/* Order Summary */}
+          <div className="bg-white p-4 rounded-lg shadow-sm">
+            <div className="flex justify-between items-center">
+              <h2 className="font-medium">Your order (1 item)</h2>
+              <button className="text-blue-600 text-sm">View</button>
+            </div>
+            
+            <div className="mt-4">
+              <h3 className="text-sm font-medium">Collection details</h3>
+              <p className="text-sm text-gray-600">Waterloo Road (Sainsbury's C&C)</p>
+            </div>
+            
+            <div className="mt-4 pt-4 border-t flex justify-between">
+              <span className="font-medium">Total to pay</span>
+              <span className="font-bold">£{total.toFixed(2)}</span>
+            </div>
           </div>
-        </div>
-
-        <div className="bg-white rounded-lg shadow">
-          <div className="p-6 space-y-6">
-            <h2 className="text-xl font-semibold">Payment options</h2>
-            <RadioGroup defaultValue="rewards">
-              <div className="space-y-4">
-                <div className="flex items-center justify-between p-4 rounded-lg border">
-                  <div className="flex items-center space-x-3">
-                    <RadioGroupItem value="rewards" id="rewards" />
-                    <label htmlFor="rewards" className="font-medium">
-                      Pay With Rewards
-                    </label>
-                  </div>
-                  <PayWithRewards
-                    cartTotal={cartTotal}
-                    onRewardApplied={handleRewardApplied}
-                  />
+          
+          {/* Billing Address */}
+          <div className="bg-white p-4 rounded-lg shadow-sm">
+            <div className="flex justify-between items-center">
+              <h2 className="font-medium">Billing address</h2>
+              <button className="text-blue-600 text-sm">Change</button>
+            </div>
+            <button className="text-sm text-gray-600 flex items-center gap-1 mt-1">
+              What is this for? <span className="text-gray-400">▼</span>
+            </button>
+            
+            <div className="mt-4 space-y-1">
+              <div className="flex gap-2">
+                <Home className="h-5 w-5 text-gray-400" />
+                <div className="text-sm">
+                  <p>Miss Ritika Garud</p>
+                  <p className="text-gray-600">372682763 jehfuhskjfbksjd f</p>
+                  <p className="text-gray-600">london</p>
+                  <p className="text-gray-600">400069</p>
+                  <p className="text-gray-600">9702070264</p>
                 </div>
-
-                <div className="flex items-center justify-between p-4 rounded-lg border">
-                  <div className="flex items-center space-x-3">
-                    <RadioGroupItem value="card" id="card" />
-                    <label htmlFor="card" className="font-medium">
-                      Credit/Debit card
-                    </label>
-                  </div>
-                  <div className="flex space-x-2">
-                    <img src="/visa.svg" alt="Visa" className="h-6" />
-                    <img src="/mastercard.svg" alt="Mastercard" className="h-6" />
-                    <img src="/amex.svg" alt="American Express" className="h-6" />
-                  </div>
-                </div>
-
-                <div className="flex items-center justify-between p-4 rounded-lg border">
-                  <div className="flex items-center space-x-3">
-                    <RadioGroupItem value="paypal" id="paypal" />
-                    <label htmlFor="paypal" className="font-medium">
-                      PayPal
-                    </label>
-                  </div>
-                  <img src="/paypal.svg" alt="PayPal" className="h-6" />
-                </div>
-              </div>
-            </RadioGroup>
-
-            <div className="pt-6 border-t">
-              <div className="flex justify-between mb-2">
-                <span>Subtotal</span>
-                <span>£{cartTotal.toFixed(2)}</span>
-              </div>
-              {appliedReward && (
-                <div className="flex justify-between mb-2 text-green-600">
-                  <span>Reward Discount</span>
-                  <span>-£{appliedReward.toFixed(2)}</span>
-                </div>
-              )}
-              <div className="flex justify-between font-semibold text-lg">
-                <span>Total to pay</span>
-                <span>£{(cartTotal - (appliedReward || 0)).toFixed(2)}</span>
               </div>
             </div>
           </div>
+          
+          {/* Promo Codes Section */}
+          <div className="bg-white p-4 rounded-lg shadow-sm">
+            <button className="w-full text-left flex justify-between items-center">
+              <span className="font-medium">Promo codes, Gift cards & Flexecash</span>
+              <span className="text-gray-400">›</span>
+            </button>
+          </div>
+          
+          {/* Nectar Card Section */}
+          <div className="bg-white p-4 rounded-lg shadow-sm">
+            <button className="w-full text-left flex justify-between items-center">
+              <div>
+                <div className="flex items-center gap-2">
+                  <div className="w-6 h-6 bg-purple-600 rounded-full" />
+                  <span className="font-medium">Nectar Card</span>
+                </div>
+                <p className="text-sm text-gray-600 mt-1">Add your Nectar card and collect points</p>
+                <p className="text-sm text-gray-600">Collect 24 Nectar points on this order</p>
+              </div>
+              <span className="text-gray-400">›</span>
+            </button>
+          </div>
+          
+          {/* Payment Options */}
+          <div className="bg-white p-4 rounded-lg shadow-sm">
+            <PaymentOptions />
+          </div>
+          
+          {/* Total and Terms */}
+          <div className="space-y-4">
+            <div className="flex justify-between items-center">
+              <span className="font-medium">Total to pay</span>
+              <span className="font-bold text-xl">£{total.toFixed(2)}</span>
+            </div>
+            
+            <div className="text-sm text-gray-600">
+              <p>
+                By placing this order you agree to our{" "}
+                <button className="text-blue-600">Terms</button> and{" "}
+                <button className="text-blue-600">Conditions</button>.
+              </p>
+              <p className="mt-1">
+                Also learn more about{" "}
+                <button className="text-blue-600">data sharing with Klarna</button>.
+              </p>
+            </div>
+            
+            <button onClick={handleProceedToPayment} className="w-full bg-green-600 hover:bg-green-700 text-white py-6">
+              Proceed to Pay £{total.toFixed(2)}
+            </button>
+          </div>
         </div>
       </div>
-    </div>
-  );
+    </PageContainer>
+  )
 }
+
