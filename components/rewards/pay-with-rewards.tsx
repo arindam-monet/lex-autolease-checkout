@@ -36,8 +36,8 @@ export function PayWithRewards({
 
   const handlePhoneVerified = async (phoneNumber: string) => {
     try {
-      const rewardsList = await apiClient.getRewards(phoneNumber)
-      setRewards(rewardsList)
+      // const rewardsList = await apiClient.getRewards(phoneNumber)
+      // setRewards(rewardsList)
       setShowPhoneDialog(false)
       setShowRewardsDialog(true)
     } catch (error) {
