@@ -1,20 +1,33 @@
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Label } from "@/components/ui/label"
 import Image from "next/image"
+import { PayWithRewards } from "./rewards/pay-with-rewards"
+import { RewardProgram } from "@/types/rewards"
 
 export function PaymentOptions() {
+  const handleRewardSelect = (reward: RewardProgram) => {
+    // Handle the selected reward
+    console.log("Selected reward:", reward)
+    // Update checkout total, etc.
+  }
+
   return (
     <div className="space-y-4">
       <h2 className="text-xl font-bold">Payment options</h2>
       <RadioGroup defaultValue="rewards">
         <div className="space-y-4">
-          <div className="flex items-center justify-between space-x-2 border rounded-lg p-4">
+          {/* <div className="flex items-center justify-between space-x-2 border rounded-lg p-4">
             <div className="flex items-center space-x-2">
               <RadioGroupItem value="rewards" id="rewards" />
               <Label htmlFor="rewards">Pay With Rewards</Label>
             </div>
             <button className="text-blue-600 text-sm">View offers</button>
-          </div>
+          </div> */}
+          <PayWithRewards
+            apiKey="your_api_key_here"
+            amount={24.50}
+            onRewardSelect={handleRewardSelect}
+          />
 
           <div className="flex items-center justify-between space-x-2 border rounded-lg p-4">
             <div className="flex items-center space-x-2">

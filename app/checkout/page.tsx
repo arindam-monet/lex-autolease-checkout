@@ -113,7 +113,7 @@ export default function CheckoutPage() {
               </p>
               <p className="mt-1">
                 Also learn more about{" "}
-                <button className="text-blue-600">data sharing with Klarna</button>.
+                <button className="text-blue-600">data sharing with Monet</button>.
               </p>
             </div>
           </div>
