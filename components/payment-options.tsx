@@ -2,8 +2,8 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Label } from "@/components/ui/label"
 import Image from "next/image"
 import { PayWithRewards } from "./rewards/pay-with-rewards"
-import {useState} from 'react'
-import {StreamResponse} from '@/types/consumer'
+import { useState } from 'react'
+import { StreamResponse } from '@/types/consumer'
 import { LBGtoGBP, maxRewardAmount } from "@/lib/utils"
 
 export function PaymentOptions() {
@@ -11,10 +11,9 @@ export function PaymentOptions() {
   const checkoutTotal = 24.50;
   const handleRewardSelect = (reward: StreamResponse) => {
     const maxAllowedReward = checkoutTotal * 0.5
-    const totalPoints = reward.points.reduce((sum, point) => 
+    const totalPoints = reward.points.reduce((sum, point) =>
       sum + parseInt(point.points, 10), 0)
     const rewardAmount = Math.min(LBGtoGBP(totalPoints), maxAllowedReward)
-    
 
     console.log(`Applied reward: £${rewardAmount.toFixed(2)}`)
   }
@@ -44,7 +43,7 @@ export function PaymentOptions() {
                   <div className="ml-6 mt-1">
                     <p className="text-sm text-gray-600">
                       Save £{maxRewardAmount(200, 25)} using {
-                        appliedReward.points.reduce((sum, point) => 
+                        appliedReward.points.reduce((sum, point) =>
                           sum + parseInt(point.points, 10), 0)
                       } LBG Points
                     </p>
