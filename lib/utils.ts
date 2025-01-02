@@ -14,3 +14,11 @@ export const calculateLloydsPoints = (streamData: StreamResponse[]): number => {
         pointsTotal + parseInt(point.points, 10), 0)
     }, 0)
 }
+
+export const LBGtoGBP = (lbgPoints: number, conversionRate = 0.1): number => {
+  return lbgPoints * conversionRate
+}
+
+export const maxRewardAmount = (LBGPoints: number, checkoutTotal: number, maxPercentage = 0.5): number => {
+  return Math.min(LBGtoGBP(LBGPoints), checkoutTotal * maxPercentage)
+}

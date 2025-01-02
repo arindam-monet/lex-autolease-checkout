@@ -6,7 +6,6 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { PhoneVerificationDialog } from "@/components/rewards/phone-verification-dialog"
 import { RewardsSelectionDialog } from "@/components/rewards/rewards-selection-dialog"
 import { RewardsApiClient } from "@/lib/api-client"
-import { RewardProgram } from "@/types/rewards"
 import { Slot } from "@/components/ui/slot"
 import { BrandAccount } from "@/types/brand"
 import { StreamResponse } from "@/types/consumer"
@@ -14,7 +13,7 @@ import { StreamResponse } from "@/types/consumer"
 interface PayWithRewardsProps {
   apiKey: string
   amount: number
-  onRewardSelect: (reward: RewardProgram) => void
+  onRewardSelect: (reward: StreamResponse) => void
   className?: string
   asChild?: boolean // Add this prop
   children?: React.ReactNode // Add this prop

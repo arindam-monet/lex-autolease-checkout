@@ -15,13 +15,3 @@ export const otpSchema = z.object({
 
 export type PhoneFormData = z.infer<typeof phoneSchema>
 export type OtpFormData = z.infer<typeof otpSchema>
-
-export interface RewardProgram {
-  id: string
-  name: string
-  logo: string
-  description: string
-  points: number
-  value: number
-}
-
