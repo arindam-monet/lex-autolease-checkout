@@ -122,7 +122,7 @@ export function PhoneForm({ onSubmit }: LoginFormProps) {
             <FormItem>
               <FormControl>
                 <PhoneInput
-                  className=" sm:text-lg"
+                  className="text-sm lg:text-lg"
                   placeholder="Enter your mobile number"
                   {...field}
                   defaultCountry="IN"

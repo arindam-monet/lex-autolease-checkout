@@ -1,5 +1,5 @@
 import { ConsumerLoginRequest, ConsumerLoginResponse, ConsumerLoginVerifyOtpRequest, ConsumerLoginVerifyOtpResponse } from "@/types/auth"
-import { RewardProgram } from "@/types/rewards"
+import { ConsumerDashboardResponse, ConsumerLinkedBrandAccountResponse, StreamResponse } from "@/types/consumer"
 import axios, { AxiosInstance } from "axios"
 
 export class RewardsApiClient {
@@ -25,39 +25,63 @@ export class RewardsApiClient {
     })
   }
 
-  private async fetch<T>(endpoint: string, options: RequestInit = {}): Promise<T> {
-    const response = await fetch(`${this.baseUrl}${endpoint}`, {
-      ...options,
-      headers: {
-        ...options.headers,
-        // "Authorization": `Bearer ${this.apiKey}`,
-        "Content-Type": "application/json",
-      },
-    })
 
-    if (!response.ok) {
-      throw new Error(`API Error: ${response.statusText}`)
+  private async request<T>(endpoint: string, options: any = {}): Promise<T> {
+    try {
+      const response = await this.axiosInstance.request({
+        url: endpoint,
+        ...options
+      })
+      return response.data
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        throw new Error(`API Error: ${error.message}`)
+      } else {
+        throw new Error(`API Error: ${String(error)}`)
+      }
     }
-
-    return response.json()
   }
 
   async requestOtp(payload: ConsumerLoginRequest) {
-    return this.fetch<ConsumerLoginResponse>("/consumers/login", {
+    return this.request<ConsumerLoginResponse>("/consumers/login", {
       method: "POST",
-      body: JSON.stringify(payload),
+      data: payload,
     })
   }
 
   async verifyOtp(payload: ConsumerLoginVerifyOtpRequest) {
-    return this.fetch<ConsumerLoginVerifyOtpResponse>("/consumers/login/verify-otp", {
-      method: "POST",
-      body: JSON.stringify(payload),
+    return this.request<ConsumerLoginVerifyOtpResponse>("/consumers/login/verify-otp", {
+      method: "POST", 
+      data: payload,
     })
   }
 
-  async getRewards(phoneNumber: string): Promise<RewardProgram[]> {
-    return this.fetch(`/rewards?phoneNumber=${phoneNumber}`)
+  async getRewards() {
+    return this.request<ConsumerLinkedBrandAccountResponse>("/consumers/poll-brands")
+  }
+
+  async getConsumerDashboardData() {
+    return this.request<ConsumerDashboardResponse>("/consumers/dashboard")
+  }
+
+  subscribeToRewardsStream(sessionId: string, consumerId: string, onData: (data: StreamResponse) => void) {
+    const eventSource = new EventSource(
+      `${this.baseUrl}/consumers/dashboard-details?sessionId=${sessionId}&consumerId=${consumerId}`
+    )
+
+    eventSource.onmessage = (event) => {
+      const data = JSON.parse(event.data) as StreamResponse
+      onData(data)
+    }
+
+    eventSource.onerror = (error) => {
+      console.error('SSE Error:', error)
+      eventSource.close()
+    }
+
+    return () => {
+      eventSource.close()
+    }
   }
 }
 

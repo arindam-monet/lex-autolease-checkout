@@ -8,6 +8,8 @@ import { RewardsSelectionDialog } from "@/components/rewards/rewards-selection-d
 import { RewardsApiClient } from "@/lib/api-client"
 import { RewardProgram } from "@/types/rewards"
 import { Slot } from "@/components/ui/slot"
+import { BrandAccount } from "@/types/brand"
+import { StreamResponse } from "@/types/consumer"
 
 interface PayWithRewardsProps {
   apiKey: string
@@ -28,31 +30,31 @@ export function PayWithRewards({
 }: PayWithRewardsProps) {
   const [showPhoneDialog, setShowPhoneDialog] = useState(false)
   const [showRewardsDialog, setShowRewardsDialog] = useState(false)
-  const [rewards, setRewards] = useState<RewardProgram[]>([])
-  const [selectedReward, setSelectedReward] = useState<RewardProgram | null>(null)
+  const [rewards, setRewards] = useState<BrandAccount[]>([])
+  const [selectedReward, setSelectedReward] = useState<BrandAccount | null>(null)
+  const [streamData, setStreamData] = useState<StreamResponse[]>([])
   const apiClient = new RewardsApiClient(apiKey)
 
   const Trigger = asChild ? Slot : "div"
 
-  const handlePhoneVerified = async (phoneNumber: string) => {
+  const handlePhoneVerified = async () => {
     try {
-      // const rewardsList = await apiClient.getRewards(phoneNumber)
-      // setRewards(rewardsList)
+      const dashboardData = await apiClient.getConsumerDashboardData();
+
+      const cleanup = apiClient.subscribeToRewardsStream(
+        dashboardData.session.sessionId,
+        dashboardData.session.consumerId,
+        (data) => {
+          setStreamData(prev => [...prev, data])
+        }
+      )
+
       setShowPhoneDialog(false)
       setShowRewardsDialog(true)
+      return cleanup
     } catch (error) {
       console.error("Failed to fetch rewards:", error)
     }
-  }
-
-  const handleRewardSelect = (reward: RewardProgram) => {
-    setSelectedReward(reward)
-    setShowRewardsDialog(false)
-    onRewardSelect(reward)
-  }
-
-  const handleViewOffers = () => {
-    setShowPhoneDialog(true)
   }
 
   return (
@@ -69,7 +71,8 @@ export function PayWithRewards({
                 </div>
                 {selectedReward && (
                   <p className="text-sm text-muted-foreground">
-                    Save £{selectedReward.value.toFixed(2)} using {selectedReward.points} {selectedReward.name}
+                    Save x amount
+                    {/* Save £{selectedReward.value.toFixed(2)} using {selectedReward.points} {selectedReward.name} */}
                   </p>
                 )}
               </div>
@@ -88,8 +91,10 @@ export function PayWithRewards({
       <RewardsSelectionDialog
         open={showRewardsDialog}
         onClose={() => setShowRewardsDialog(false)}
-        rewards={rewards}
-        onSelect={handleRewardSelect}
+        streamData={streamData}
+        onSelect={(reward) => {
+          console.log(reward, 'reward')
+        }}
       />
     </div>
   )
