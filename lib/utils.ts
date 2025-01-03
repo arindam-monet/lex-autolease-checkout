@@ -19,7 +19,14 @@ export const calculateLloydsPoints = (streamData: StreamResponse[]): number => {
   return streamData
     .filter(data => data.account.brand.parentBrand === 'LLOYD')
     .reduce((total, data) => {
-      return total + data.points.reduce((pointsTotal, point) => 
+      return total + data.points.reduce((pointsTotal, point) =>
         pointsTotal + parseInt(point.points, 10), 0)
     }, 0)
+}
+
+export const formatCurrency = (amount: number) => {
+  return new Intl.NumberFormat('en-GB', {
+    style: 'currency',
+    currency: 'GBP'
+  }).format(amount)
 }

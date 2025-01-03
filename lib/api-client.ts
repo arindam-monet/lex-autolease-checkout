@@ -64,6 +64,10 @@ export class RewardsApiClient {
     return this.request<ConsumerDashboardResponse>("/consumers/dashboard")
   }
 
+  async redeemPoints(){
+    return this.request<ConsumerDashboardResponse>("/consumers/redeem-points")
+  }
+
   subscribeToRewardsStream(sessionId: string, consumerId: string, onData: (data: StreamResponse) => void) {
     const eventSource = new EventSource(
       `${this.baseUrl}/consumers/dashboard-details?sessionId=${sessionId}&consumerId=${consumerId}`

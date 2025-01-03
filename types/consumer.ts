@@ -42,3 +42,12 @@ export interface Account {
   verificationId: string;
   brand: Brand;
 }
+
+
+export interface RedeemPointsRequest {
+  apiKey: string;
+  secretKey: string;
+  brandName: string;
+  totalPoints: number;
+  consumerId: string;
+}

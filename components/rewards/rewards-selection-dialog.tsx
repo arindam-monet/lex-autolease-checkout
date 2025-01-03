@@ -46,7 +46,7 @@ export function RewardsSelectionDialog({
             <div className="flex-1">
               <div className="flex items-center space-x-2">
                 <img
-                  src="/images/lloyds.svg"
+                  src="/images/lloyds-icon.svg"
                   alt="Lloyds Banking Group"
                   className="h-6 w-6"
                 />
