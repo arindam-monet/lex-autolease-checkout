@@ -74,7 +74,10 @@ export function PaymentOptions({ onPriceUpdate }: PaymentOptionsProps) {
                   <div className="bg-yellow-50 p-2 rounded-md">
                     <h3 className="font-medium">LBG Loyalty Points</h3>
                     <p className="text-sm text-gray-600">
-                      Points available for redemption: {storage.get('totalLloydsPoints')}
+                      Points available: <span className="font-semibold">{storage.get('totalLloydsPoints')}</span>
+                    </p>
+                    <p className="text-sm text-blue-600">
+                      Points available for redemption: <span className="font-semibold">{storage.get('appliedRewardPoints')}</span>
                     </p>
                   </div>
 
@@ -84,14 +87,14 @@ export function PaymentOptions({ onPriceUpdate }: PaymentOptionsProps) {
                       value={[rewardPercentage]}
                       onValueChange={([value]) => setRewardPercentage(value)}
                       max={50}
-                      step={25}
+                      step={1}
                       className="w-full"
                     />
-                    <div className="flex justify-between text-sm text-gray-600 w-full">
+                    {/* <div className="flex justify-between text-sm text-gray-600 w-full">
                       <span>0%</span>
                       <span>25%</span>
                       <span>50%</span>
-                    </div>
+                    </div> */}
                   </div>
 
                   <div className="bg-gray-50 p-4 rounded-md space-y-2">
