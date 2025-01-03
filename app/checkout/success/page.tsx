@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import { Check, Receipt, CreditCard, Gift } from 'lucide-react'
 import { formatCurrency } from '@/lib/utils'
 import Image from 'next/image'
@@ -23,6 +23,7 @@ interface OrderDetails {
   rewardsUsed: number
   remainingPoints: number
   product: ProductDetails
+  transactionId?: string
   paymentBreakdown: {
     subtotal: number
     rewards: number
@@ -32,14 +33,13 @@ interface OrderDetails {
 
 export default function SuccessPage() {
   const router = useRouter()
-  const searchParams = useSearchParams()
-  const sessionId = searchParams.get('session_id')
   const [orderDetails, setOrderDetails] = useState<OrderDetails>({
     orderId: 'ORD-2024-001',
     date: '',
     total: 24.50,
     rewardsUsed: 500,
     remainingPoints: 1500,
+    transactionId: '',
     product: {
       name: "FINERY Kimmy Dress 22",
       sku: "tue145514061",
@@ -56,6 +56,7 @@ export default function SuccessPage() {
 
   const appliedRewardPoints = Number(storage.get('appliedRewardPoints')) || 0
   const appliedRewardAmount = Number(storage.get('appliedRewardAmount')) || 0
+  const transactionId = storage.get('txnId') || ''
 
   useEffect(() => {
     const totalPoints = Number(storage.get('totalLloydsPoints') || '0')
@@ -66,6 +67,7 @@ export default function SuccessPage() {
       total: 24.50,
       rewardsUsed: appliedRewardPoints,
       remainingPoints: totalPoints - appliedRewardPoints,
+      transactionId: transactionId,
       product: {
         name: "FINERY Kimmy Dress 22",
         sku: "tue145514061",
@@ -178,7 +180,7 @@ export default function SuccessPage() {
           <div className="space-y-3 text-sm">
             <div className="flex justify-between">
               <span className="text-gray-600">Transaction ID</span>
-              <span className="font-medium">{storage.get('txnId')}</span>
+              <span className="font-medium">{orderDetails.transactionId}</span>
             </div>
             <div className="flex justify-between">
               <span className="text-gray-600">Points Used</span>

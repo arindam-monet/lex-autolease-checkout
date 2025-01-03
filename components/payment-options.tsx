@@ -1,6 +1,5 @@
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Label } from "@/components/ui/label"
-import Image from "next/image"
 import { PayWithRewards } from "./rewards/pay-with-rewards"
 import { useState, useEffect } from 'react'
 import { StreamResponse } from '@/types/consumer'
