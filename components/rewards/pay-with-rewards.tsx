@@ -37,31 +37,33 @@ export function PayWithRewards({
   const Trigger = asChild ? Slot : "div"
 
   const handleDialogClose = () => {
-    setStreamData([])
+    // setStreamData([])
   }
 
   const handlePhoneVerified = async () => {
     try {
       const dashboardData = await apiClient.getConsumerDashboardData();
+      setStreamData([]);
 
       const cleanup = apiClient.subscribeToRewardsStream(
         dashboardData.session.sessionId,
         dashboardData.session.consumerId,
         (data) => {
           setStreamData(prev => {
-            // Check if response already exists for this account
-            const exists = prev.some(item =>
-              item.account.id === data.account.id
-            )
-            if (exists) return prev
-            return [...prev, data]
-          })
+            if (prev.find(item => item.account.id === data.account.id)) {
+              return prev;
+            }
+            return [...prev, data];
+          });
         }
-      )
+      );
 
       setShowPhoneDialog(false)
       setShowRewardsDialog(true)
-      return cleanup
+      return () => {
+        cleanup();
+        setStreamData([]);
+      };
     } catch (error) {
       console.error("Failed to fetch rewards:", error)
     }
