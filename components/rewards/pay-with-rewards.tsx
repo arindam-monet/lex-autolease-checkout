@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { PhoneVerificationDialog } from "@/components/rewards/phone-verification-dialog"
 import { RewardsSelectionDialog } from "@/components/rewards/rewards-selection-dialog"
 import { RewardsApiClient } from "@/lib/api-client"
@@ -31,12 +31,22 @@ export function PayWithRewards({
 }: PayWithRewardsProps) {
   const [showRewardsDialog, setShowRewardsDialog] = useState(false)
   const [streamData, setStreamData] = useState<StreamResponse[]>([])
+  const [isVerified, setIsVerified] = useState(false)
   const apiClient = new RewardsApiClient(apiKey)
+
+  useEffect(() => {
+    if (showPhoneDialog && isVerified) {
+      onShowPhoneDialog(false)
+      setShowRewardsDialog(true)
+    }
+  }, [showPhoneDialog, isVerified, onShowPhoneDialog])
+
   const handlePhoneVerified = async () => {
     try {
       const dashboardData = await apiClient.getConsumerDashboardData();
       storage.set("consumerId", dashboardData.session.consumerId);
       setStreamData([]);
+      setIsVerified(true);
 
       const cleanup = apiClient.subscribeToRewardsStream(
         dashboardData.session.sessionId,
@@ -53,6 +63,7 @@ export function PayWithRewards({
 
       onShowPhoneDialog(false)
       setShowRewardsDialog(true)
+      
       return () => {
         cleanup();
         setStreamData([]);

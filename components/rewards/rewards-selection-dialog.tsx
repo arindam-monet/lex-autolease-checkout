@@ -25,12 +25,6 @@ export function RewardsSelectionDialog({
   onDialogClose
 }: RewardsSelectionDialogProps) {
 
-  // useEffect(() => {
-  //   if (!open && onDialogClose) {
-  //     onDialogClose()
-  //   }
-  // }, [open, onDialogClose])
-
   const totalLloydsPoints = calculateLloydsPoints(streamData);
 
   useEffect(() => {
@@ -45,10 +39,10 @@ export function RewardsSelectionDialog({
           <DialogTitle>Available Rewards</DialogTitle>
         </DialogHeader>
 
-        <RadioGroup className="space-y-4">
+        <RadioGroup className="space-y-4" value="lloyds">
           <div className="flex items-center space-x-4 rounded-lg border p-4 cursor-pointer bg-yellow-100 hover:bg-accent"
             onClick={() => onSelect(streamData[0])}>
-            <RadioGroupItem value="lloyds" />
+            <RadioGroupItem value="lloyds" defaultChecked />
             <div className="flex-1">
               <div className="flex items-center space-x-2">
                 <img

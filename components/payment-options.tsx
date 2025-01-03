@@ -42,7 +42,9 @@ export function PaymentOptions({ onPriceUpdate }: PaymentOptionsProps) {
     storage.set('appliedRewardAmount', appliedRewardAmount.toString())
   }, [rewardPercentage, appliedRewardAmount])
 
-
+  const handleViewOffers = () => {
+    setShowPhoneDialog(true)
+  }
 
   return (
     <div className="space-y-6">
@@ -68,7 +70,7 @@ export function PaymentOptions({ onPriceUpdate }: PaymentOptionsProps) {
                   </p>
                 </div>
                 <button
-                  onClick={() => setShowPhoneDialog(true)}
+                  onClick={handleViewOffers}
                   className="text-blue-600 text-sm cursor-pointer hover:underline"
                 >
                   View offers {appliedReward && "(1 applied)"}
