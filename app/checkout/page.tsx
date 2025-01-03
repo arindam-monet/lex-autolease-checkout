@@ -90,7 +90,7 @@ export default function CheckoutPage() {
 
             <div className="mt-4">
               <h3 className="text-sm font-medium">Collection details</h3>
-              <p className="text-sm text-gray-600">Waterloo Road (Sainsbury's C&C)</p>
+              <p className="text-sm text-gray-600">{`Waterloo Road (Sainsbury's C&C)`}</p>
             </div>
 
             <div className="mt-4 pt-4 border-t flex justify-between">
