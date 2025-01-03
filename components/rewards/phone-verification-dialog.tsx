@@ -99,7 +99,7 @@ export function PhoneVerificationDialog({
 
           </div>
         </DialogHeader>
-        <div className="w-full">
+        <div className="">
         {step === "phone" ? (
           <PhoneForm onSubmit={handleLoginSubmit} />
         ) : (
