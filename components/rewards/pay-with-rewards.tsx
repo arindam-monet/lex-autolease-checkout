@@ -1,15 +1,10 @@
 "use client"
 
 import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { PhoneVerificationDialog } from "@/components/rewards/phone-verification-dialog"
 import { RewardsSelectionDialog } from "@/components/rewards/rewards-selection-dialog"
 import { RewardsApiClient } from "@/lib/api-client"
-import { Slot } from "@/components/ui/slot"
-import { BrandAccount } from "@/types/brand"
 import { StreamResponse } from "@/types/consumer"
-import { calculateLloydsPoints } from "@/lib/utils"
 import { storage } from "@/lib/storage"
 
 interface PayWithRewardsProps {
@@ -36,7 +31,6 @@ export function PayWithRewards({
 }: PayWithRewardsProps) {
   const [showRewardsDialog, setShowRewardsDialog] = useState(false)
   const [streamData, setStreamData] = useState<StreamResponse[]>([])
-  const [selectedReward, setSelectedReward] = useState<StreamResponse | null>(null)
   const apiClient = new RewardsApiClient(apiKey)
   const handlePhoneVerified = async () => {
     try {
@@ -69,7 +63,6 @@ export function PayWithRewards({
   }
 
   const handleRewardSelect = (reward: StreamResponse) => {
-    setSelectedReward(reward)
     setShowRewardsDialog(false)
     onRewardSelect(reward)
   }

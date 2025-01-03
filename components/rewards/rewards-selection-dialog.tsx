@@ -25,11 +25,11 @@ export function RewardsSelectionDialog({
   onDialogClose
 }: RewardsSelectionDialogProps) {
 
-  useEffect(() => {
-    if (!open && onDialogClose) {
-      onDialogClose()
-    }
-  }, [open, onDialogClose])
+  // useEffect(() => {
+  //   if (!open && onDialogClose) {
+  //     onDialogClose()
+  //   }
+  // }, [open, onDialogClose])
 
   const totalLloydsPoints = calculateLloydsPoints(streamData);
 
