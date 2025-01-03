@@ -14,6 +14,7 @@ interface PaymentOptionsProps {
 }
 
 export function PaymentOptions({ onPriceUpdate }: PaymentOptionsProps) {
+  const [showPhoneDialog, setShowPhoneDialog] = useState(false)
   const [appliedReward, setAppliedReward] = useState<StreamResponse | null>(null)
   const checkoutTotal = 24.50;
   const [rewardPercentage, setRewardPercentage] = useState(50) // Default to max
@@ -52,21 +53,26 @@ export function PaymentOptions({ onPriceUpdate }: PaymentOptionsProps) {
             apiKey="your_api_key_here"
             amount={checkoutTotal}
             onRewardSelect={handleRewardSelect}
+            showPhoneDialog={showPhoneDialog}
+            onShowPhoneDialog={setShowPhoneDialog}
           >
             <div className="border rounded-lg p-4 border-green-500">
               <div className="flex items-center justify-between">
                 <div>
                   <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="rewards" id="rewards" defaultChecked/>
+                    <RadioGroupItem value="rewards" id="rewards" defaultChecked />
                     <Label htmlFor="rewards" className="text-sm">Pay With Rewards</Label>
                   </div>
                   <p className="text-xs text-gray-500 ml-6">
                     Powered by <span className="font-semibold">Monet</span>
                   </p>
                 </div>
-                <span className="text-blue-600 text-sm cursor-pointer">
+                <button
+                  onClick={() => setShowPhoneDialog(true)}
+                  className="text-blue-600 text-sm cursor-pointer hover:underline"
+                >
                   View offers {appliedReward && "(1 applied)"}
-                </span>
+                </button>
               </div>
 
               {appliedReward && (

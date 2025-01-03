@@ -16,31 +16,28 @@ interface PayWithRewardsProps {
   apiKey: string
   amount: number
   onRewardSelect: (reward: StreamResponse) => void
+  showPhoneDialog: boolean
+  onShowPhoneDialog: (show: boolean) => void
   className?: string
-  asChild?: boolean // Add this prop
-  children?: React.ReactNode // Add this prop
+  asChild?: boolean
+  children?: React.ReactNode
+  
 }
 
 export function PayWithRewards({
   apiKey,
   amount,
   onRewardSelect,
+  showPhoneDialog,
+  onShowPhoneDialog,
   className = "",
   asChild,
   children
 }: PayWithRewardsProps) {
-  const [showPhoneDialog, setShowPhoneDialog] = useState(false)
   const [showRewardsDialog, setShowRewardsDialog] = useState(false)
   const [streamData, setStreamData] = useState<StreamResponse[]>([])
   const [selectedReward, setSelectedReward] = useState<StreamResponse | null>(null)
   const apiClient = new RewardsApiClient(apiKey)
-
-  const Trigger = asChild ? Slot : "div"
-
-  const handleDialogClose = () => {
-    // setStreamData([])
-  }
-
   const handlePhoneVerified = async () => {
     try {
       const dashboardData = await apiClient.getConsumerDashboardData();
@@ -60,7 +57,7 @@ export function PayWithRewards({
         }
       );
 
-      setShowPhoneDialog(false)
+      onShowPhoneDialog(false)
       setShowRewardsDialog(true)
       return () => {
         cleanup();
@@ -79,30 +76,11 @@ export function PayWithRewards({
 
   return (
     <div className={className}>
-      <Trigger onClick={() => setShowPhoneDialog(true)}>
-        {children || (
-          <RadioGroup value={selectedReward ? "rewards" : undefined}>
-            <div className="flex items-center space-x-4 rounded-lg border p-4">
-              <RadioGroupItem value="rewards" id="rewards" />
-              <div className="flex-1">
-                <div className="flex items-center justify-between">
-                  <span className="font-medium">Pay With Rewards</span>
-                  <Button variant="link">View offers</Button>
-                </div>
-                {selectedReward && (
-                  <p className="text-sm text-muted-foreground">
-                    {calculateLloydsPoints([selectedReward])} LBG Points available
-                  </p>
-                )}
-              </div>
-            </div>
-          </RadioGroup>
-        )}
-      </Trigger>
+      {children}
 
       <PhoneVerificationDialog
         open={showPhoneDialog}
-        onClose={() => setShowPhoneDialog(false)}
+        onClose={() => onShowPhoneDialog(false)}
         onVerified={handlePhoneVerified}
         apiClient={apiClient}
       />
@@ -112,7 +90,7 @@ export function PayWithRewards({
         onClose={() => setShowRewardsDialog(false)}
         streamData={streamData}
         onSelect={handleRewardSelect}
-        onDialogClose={handleDialogClose}
+        onDialogClose={() => setStreamData([])}
       />
     </div>
   )
