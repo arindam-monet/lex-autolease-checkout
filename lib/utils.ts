@@ -34,3 +34,9 @@ export const formatCurrency = (amount: number) => {
     currency: 'GBP'
   }).format(amount)
 }
+
+export const formatTransactionId = (id?: string): string => {
+  if (!id) return '';
+  if (id.length <= 8) return id
+  return `${id.slice(0, 4)}...${id.slice(-4)}`
+}

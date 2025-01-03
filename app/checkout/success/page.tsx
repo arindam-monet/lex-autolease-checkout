@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { Check, Receipt, CreditCard, Gift } from 'lucide-react'
-import { formatCurrency } from '@/lib/utils'
+import { formatCurrency, formatTransactionId } from '@/lib/utils'
 import Image from 'next/image'
 import { Navbar } from '@/components/layout/navbar'
 import { storage } from '@/lib/storage'
@@ -149,59 +149,62 @@ export default function SuccessPage() {
           </div>
         </div>
 
-        {/* Payment Breakdown Card */}
+        {/* Payment and Rewards Consolidated Card */}
         <div className="bg-white rounded-lg shadow-md p-6 mb-6">
-          <div className="flex items-center gap-2 mb-4">
-            <CreditCard className="h-5 w-5 text-gray-500" />
-            <h2 className="text-lg font-semibold">Payment Breakdown</h2>
+          {/* Payment Breakdown */}
+          <div className="mb-6">
+            <div className="flex items-center gap-2 mb-4">
+              <CreditCard className="h-5 w-5 text-gray-500" />
+              <h2 className="text-lg font-semibold">Payment Details</h2>
+            </div>
+            <div className="space-y-3 text-sm">
+              <div className="flex justify-between">
+                <span className="text-gray-600">Subtotal</span>
+                <span>{formatCurrency(orderDetails.paymentBreakdown.subtotal)}</span>
+              </div>
+              <div className="flex justify-between text-green-600">
+                <span>Rewards Applied (LBG Rewards)</span>
+                <span>-{formatCurrency(orderDetails.paymentBreakdown.rewards)}</span>
+              </div>
+              <div className="flex justify-between font-bold pt-3 border-t">
+                <span>Final Amount Paid</span>
+                <span>{formatCurrency(orderDetails.paymentBreakdown.finalAmount)}</span>
+              </div>
+            </div>
           </div>
-          <div className="space-y-3 text-sm">
-            <div className="flex justify-between">
-              <span className="text-gray-600">Subtotal</span>
-              <span>{formatCurrency(orderDetails.paymentBreakdown.subtotal)}</span>
+
+          {/* Lloyds Rewards */}
+          <div>
+            <div className="flex items-center gap-2 mb-4">
+              <Image src={'/images/lloyds-icon.svg'} alt="Lloyds Rewards" width={20} height={20} />
+              <h2 className="text-lg font-semibold">LBG Reward Details</h2>
             </div>
-            <div className="flex justify-between text-green-600">
-              <span>Rewards Applied</span>
-              <span>-{formatCurrency(orderDetails.paymentBreakdown.rewards)}</span>
-            </div>
-            <div className="flex justify-between font-bold pt-3 border-t">
-              <span>Final Amount Paid</span>
-              <span>{formatCurrency(orderDetails.paymentBreakdown.finalAmount)}</span>
+            <div className="space-y-3 text-sm">
+              <div className="flex justify-between">
+                <span className="text-gray-600">Transaction ID</span>
+                <span className="font-medium">{formatTransactionId(orderDetails.transactionId)}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-gray-600">Points Used</span>
+                <span className="font-medium">{orderDetails.rewardsUsed} LBG points</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-gray-600">Remaining Balance</span>
+                <span className="font-medium">{orderDetails.remainingPoints} LBG points</span>
+              </div>
             </div>
           </div>
+
+
         </div>
-
-        {/* Rewards Balance Card */}
-        <div className="bg-white rounded-lg shadow-md p-6 mb-8">
-          <div className="flex items-center gap-2 mb-4">
-            <Gift className="h-5 w-5 text-gray-500" />
-            <h2 className="text-lg font-semibold">Lloyds Rewards</h2>
-          </div>
-          <div className="space-y-3 text-sm">
-            <div className="flex justify-between">
-              <span className="text-gray-600">Transaction ID</span>
-              <span className="font-medium">{orderDetails.transactionId}</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-gray-600">Points Used</span>
-              <span className="font-medium">{orderDetails.rewardsUsed} LBG points</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-gray-600">Remaining Balance</span>
-              <span className="font-medium">{orderDetails.remainingPoints} LBG points</span>
-            </div>
-
-          </div>
-
-          {/* Action Button */}
-          <div className="text-center mt-8">
-            <button
-              onClick={() => router.push('/')}
-              className="bg-black text-white px-8 py-3 rounded-lg hover:bg-gray-800 transition-colors"
-            >
-              Continue Shopping
-            </button>
-          </div>
+        {/* Action Button */}
+        <div className="text-center mt-8">
+          <button
+            onClick={() => router.push('/')}
+            className="bg-black text-white px-8 py-3 rounded-lg hover:bg-gray-800 transition-colors"
+          >
+            Continue Shopping
+          </button>
         </div>
       </div>
     </>
