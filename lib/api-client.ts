@@ -52,7 +52,7 @@ export class RewardsApiClient {
 
   async verifyOtp(payload: ConsumerLoginVerifyOtpRequest) {
     return this.request<ConsumerLoginVerifyOtpResponse>("/consumers/login/verify-otp", {
-      method: "POST", 
+      method: "POST",
       data: payload,
     })
   }
@@ -65,8 +65,8 @@ export class RewardsApiClient {
     return this.request<ConsumerDashboardResponse>("/consumers/dashboard")
   }
 
-  async redeemPoints(payload: RedeemPointsRequest){
-    return this.request<ConsumerDashboardResponse>("/pay/redeem", {
+  async redeemPoints(payload: RedeemPointsRequest) {
+    return this.request<{ id: string; message: string }>("/pay/redeem", {
       method: "POST",
       data: payload,
     })

@@ -62,6 +62,9 @@ export function PaymentModal({ isOpen, onClose, amount }: PaymentModalProps) {
       "consumerId": storage.get('consumerId') || '',
     })
 
+    const txnId = redeemPointsRes.id;
+    storage.set('txnId', txnId);
+
     console.log(redeemPointsRes, 'result')
 
     router.push('/checkout/success')

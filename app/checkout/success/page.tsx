@@ -184,6 +184,11 @@ export default function SuccessPage() {
               <span className="text-gray-600">Remaining Balance</span>
               <span className="font-medium">{orderDetails.remainingPoints} LBG points</span>
             </div>
+
+            {/* transaction id */}
+            <div className="flex justify-between">
+              <span className="text-gray-600">Transaction ID</span>
+              <span className="font-medium">{storage.get('txnId')}</span>
           </div>
         </div>
 

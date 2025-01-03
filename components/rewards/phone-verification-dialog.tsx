@@ -12,6 +12,7 @@ import { PhoneInput } from "@/components/ui/phone-input"
 import { parsePhoneNumber } from "react-phone-number-input"
 import { InputOTP, InputOTPGroup, InputOTPSlot } from "../ui/input-otp"
 import { storage } from "@/lib/storage"
+import Image from "next/image"
 
 interface PhoneVerificationDialogProps {
   open: boolean
@@ -86,17 +87,25 @@ export function PhoneVerificationDialog({
       otpForm.reset();
       onClose();
     }}>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="sm:max-w-[600px]">
         <DialogHeader>
-          <DialogTitle>
-            {step === "phone" ? "Enter your phone number" : "Enter verification code"}
-          </DialogTitle>
+          <div className="flex flex-col items-center py-6 space-y-2 mx-auto">
+            <Image src="/images/monetlogo.svg" alt="Monet Rewards" width={100} height={100} />
+
+            <h4 className="font-bold text-xl">Monet Rewards</h4>
+            <p className="text-sm text-gray-500">Redeem your points on every purchase and Save Monet</p>
+          </div>
+          <div>
+
+          </div>
         </DialogHeader>
+        <div className="w-full">
         {step === "phone" ? (
           <PhoneForm onSubmit={handleLoginSubmit} />
         ) : (
           <OtpForm onSubmit={handleOtpSubmit} />
         )}
+        </div>
       </DialogContent>
     </Dialog>
   )
@@ -114,6 +123,9 @@ export function PhoneForm({ onSubmit }: LoginFormProps) {
 
   return (
     <Form {...form}>
+
+      <h3 className="mx-auto font-semibold py-2">Enter your phone number</h3>
+
       <form onSubmit={form.handleSubmit((data) => onSubmit(data.mobileNumber))}
         className="space-y-4 mx-auto">
         <FormField
@@ -124,7 +136,7 @@ export function PhoneForm({ onSubmit }: LoginFormProps) {
               <FormControl>
                 <PhoneInput
                   className="text-sm lg:text-lg"
-                  placeholder="Enter your mobile number"
+                  placeholder="Enter your phone number"
                   {...field}
                   defaultCountry="IN"
                 />
@@ -134,7 +146,7 @@ export function PhoneForm({ onSubmit }: LoginFormProps) {
           )}
         />
         <Button type="submit" className="w-full">
-          Send Code
+          Send OTP
         </Button>
       </form>
     </Form>
@@ -153,6 +165,9 @@ export function OtpForm({ onSubmit }: OtpFormProps) {
 
   return (
     <Form {...form}>
+
+      <h3 className="mx-auto font-semibold py-2">Enter OTP</h3>
+
       <form onSubmit={form.handleSubmit((data) => onSubmit(data.otp))}
         className="space-y-4 mx-auto">
         <FormField
