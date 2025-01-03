@@ -5,22 +5,30 @@ import { PaymentOptions } from "@/components/payment-options"
 import { PageContainer } from "@/components/layout/page-container"
 import { ProgressIndicator } from "@/components/progress-indicator"
 import { Home } from 'lucide-react'
+import {useState} from 'react';
 
 export default function CheckoutPage() {
   const router = useRouter()
-  const total = 24.50
+  const [finalPrice, setFinalPrice] = useState(24.50) // Initial total before rewards
+  const originalTotal = 24.50
+
 
   const handleProceedToPayment = () => {
     // Handle payment logic
     console.log('Processing payment...')
   }
 
+  const handlePriceUpdate = (newPrice: number) => {
+    setFinalPrice(newPrice)
+  }
+
+
   return (
     <PageContainer
-      variant="checkout"
-      showSearch={false}
-      total={total}
-      onProceed={handleProceedToPayment}
+    variant="checkout"
+    showSearch={false}
+    total={finalPrice}
+    onProceed={handleProceedToPayment}
     >
       <ProgressIndicator />
       
@@ -42,7 +50,14 @@ export default function CheckoutPage() {
             
             <div className="mt-4 pt-4 border-t flex justify-between">
               <span className="font-medium">Total to pay</span>
-              <span className="font-bold">£{total.toFixed(2)}</span>
+              <div className="text-right">
+                {finalPrice !== originalTotal && (
+                  <span className="text-sm text-gray-500 line-through block">
+                    £{originalTotal.toFixed(2)}
+                  </span>
+                )}
+                <span className="font-bold">£{finalPrice.toFixed(2)}</span>
+              </div>
             </div>
           </div>
           
@@ -95,14 +110,21 @@ export default function CheckoutPage() {
           
           {/* Payment Options */}
           <div className="bg-white p-4 rounded-lg shadow-sm">
-            <PaymentOptions />
+          <PaymentOptions onPriceUpdate={handlePriceUpdate} />
           </div>
           
           {/* Total and Terms */}
           <div className="space-y-4">
             <div className="flex justify-between items-center">
               <span className="font-medium">Total to pay</span>
-              <span className="font-bold text-xl">£{total.toFixed(2)}</span>
+              <div className="text-right">
+                {finalPrice !== originalTotal && (
+                  <span className="text-sm text-gray-500 line-through block">
+                    £{originalTotal.toFixed(2)}
+                  </span>
+                )}
+                <span className="font-bold text-xl">£{finalPrice.toFixed(2)}</span>
+              </div>
             </div>
             
             <div className="text-sm text-gray-600">

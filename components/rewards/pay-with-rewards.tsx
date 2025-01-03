@@ -9,6 +9,7 @@ import { RewardsApiClient } from "@/lib/api-client"
 import { Slot } from "@/components/ui/slot"
 import { BrandAccount } from "@/types/brand"
 import { StreamResponse } from "@/types/consumer"
+import { calculateLloydsPoints } from "@/lib/utils"
 
 interface PayWithRewardsProps {
   apiKey: string
@@ -29,9 +30,8 @@ export function PayWithRewards({
 }: PayWithRewardsProps) {
   const [showPhoneDialog, setShowPhoneDialog] = useState(false)
   const [showRewardsDialog, setShowRewardsDialog] = useState(false)
-  const [rewards, setRewards] = useState<BrandAccount[]>([])
-  const [selectedReward, setSelectedReward] = useState<BrandAccount | null>(null)
   const [streamData, setStreamData] = useState<StreamResponse[]>([])
+  const [selectedReward, setSelectedReward] = useState<StreamResponse | null>(null)
   const apiClient = new RewardsApiClient(apiKey)
 
   const Trigger = asChild ? Slot : "div"
@@ -56,6 +56,12 @@ export function PayWithRewards({
     }
   }
 
+  const handleRewardSelect = (reward: StreamResponse) => {
+    setSelectedReward(reward)
+    setShowRewardsDialog(false)
+    onRewardSelect(reward)
+  }
+
   return (
     <div className={className}>
       <Trigger onClick={() => setShowPhoneDialog(true)}>
@@ -70,8 +76,7 @@ export function PayWithRewards({
                 </div>
                 {selectedReward && (
                   <p className="text-sm text-muted-foreground">
-                    Save x amount
-                    {/* Save £{selectedReward.value.toFixed(2)} using {selectedReward.points} {selectedReward.name} */}
+                    {calculateLloydsPoints([selectedReward])} LBG Points available
                   </p>
                 )}
               </div>
@@ -91,9 +96,7 @@ export function PayWithRewards({
         open={showRewardsDialog}
         onClose={() => setShowRewardsDialog(false)}
         streamData={streamData}
-        onSelect={(reward) => {
-          console.log(reward, 'reward')
-        }}
+        onSelect={handleRewardSelect}
       />
     </div>
   )
