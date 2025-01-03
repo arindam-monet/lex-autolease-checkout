@@ -194,7 +194,7 @@ export default function SuccessPage() {
           </div>
 
           {/* Action Button */}
-          <div className="text-center">
+          <div className="text-center mt-8">
             <button
               onClick={() => router.push('/')}
               className="bg-black text-white px-8 py-3 rounded-lg hover:bg-gray-800 transition-colors"

@@ -74,7 +74,7 @@ export default function CheckoutPage() {
 
         <div className="space-y-6">
           {/* Order Summary */}
-          <div className="bg-white p-4 rounded-lg shadow-sm">
+          <div className="bg-white p-2 rounded-lg shadow-sm">
             <div className="flex justify-between items-center">
               <h2 className="font-medium">Your order (1 item)</h2>
               <button className="text-blue-600 text-sm">View</button>
@@ -99,7 +99,7 @@ export default function CheckoutPage() {
           </div>
 
           {/* Billing Address */}
-          <div className="bg-white p-4 rounded-lg shadow-sm">
+          <div className="bg-white p-2 rounded-lg shadow-sm">
             <div className="flex justify-between items-center">
               <h2 className="font-medium">Billing address</h2>
               <button className="text-blue-600 text-sm">Change</button>
@@ -123,7 +123,7 @@ export default function CheckoutPage() {
           </div>
 
           {/* Promo Codes Section */}
-          <div className="bg-white p-4 rounded-lg shadow-sm">
+          <div className="bg-white p-2 rounded-lg shadow-sm">
             <button className="w-full text-left flex justify-between items-center">
               <span className="font-medium">Promo codes, Gift cards & Flexecash</span>
               <span className="text-gray-400">›</span>
@@ -131,7 +131,7 @@ export default function CheckoutPage() {
           </div>
 
           {/* Nectar Card Section */}
-          <div className="bg-white p-4 rounded-lg shadow-sm">
+          <div className="bg-white p-2 rounded-lg shadow-sm">
             <button className="w-full text-left flex justify-between items-center">
               <div>
                 <div className="flex items-center gap-2">
@@ -146,7 +146,7 @@ export default function CheckoutPage() {
           </div>
 
           {/* Payment Options */}
-          <div className="bg-white p-4 rounded-lg shadow-sm">
+          <div className="bg-white p-2 rounded-lg shadow-sm">
             <PaymentOptions onPriceUpdate={handlePriceUpdate} />
           </div>
 

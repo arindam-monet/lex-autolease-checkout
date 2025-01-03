@@ -87,7 +87,7 @@ export function PhoneVerificationDialog({
       otpForm.reset();
       onClose();
     }}>
-      <DialogContent className="sm:max-w-[600px]">
+      <DialogContent className="max-w-[425px]">
         <DialogHeader>
           <div className="flex flex-col items-center py-6 space-y-2 mx-auto">
             <Image src="/images/monetlogo.svg" alt="Monet Rewards" width={100} height={100} />
@@ -99,7 +99,7 @@ export function PhoneVerificationDialog({
 
           </div>
         </DialogHeader>
-        <div className="">
+        <div className="w-full">
         {step === "phone" ? (
           <PhoneForm onSubmit={handleLoginSubmit} />
         ) : (
@@ -169,12 +169,12 @@ export function OtpForm({ onSubmit }: OtpFormProps) {
       <h3 className="mx-auto font-semibold py-2">Enter OTP</h3>
 
       <form onSubmit={form.handleSubmit((data) => onSubmit(data.otp))}
-        className="space-y-4 mx-auto">
+        className="space-y-4 w-full max-w-md mx-auto">
         <FormField
           control={form.control}
           name="otp"
           render={({ field }) => (
-            <FormItem>
+            <FormItem className="flex flex-col items-center">
               <FormControl>
                 <InputOTP
                   maxLength={6}
@@ -182,12 +182,12 @@ export function OtpForm({ onSubmit }: OtpFormProps) {
                   onChange={field.onChange}
                   className="w-full"
                 >
-                  <InputOTPGroup className="flex gap-4">
+                  <InputOTPGroup className="flex justify-center gap-2 sm:gap-4">
                     {[...Array(6)].map((_, index) => (
                       <InputOTPSlot
                         key={index}
                         index={index}
-                        className="w-12 h-12 text-center border-2 border-gray-600 rounded-md"
+                        className="w-10 h-10 sm:w-12 sm:h-12 text-center border-2 border-gray-600 rounded-md"
                       />
                     ))}
                   </InputOTPGroup>

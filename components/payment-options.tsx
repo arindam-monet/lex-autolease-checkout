@@ -7,6 +7,7 @@ import { calculateLloydsPoints, GBPtoLBG, LBGtoGBP, maxRewardAmount } from "@/li
 import { Slider } from "./ui/slider"
 import { Skeleton } from "./ui/skeleton"
 import { storage } from "@/lib/storage"
+import Image from "next/image"
 
 interface PaymentOptionsProps {
   onPriceUpdate: (price: number) => void;
@@ -53,11 +54,11 @@ export function PaymentOptions({ onPriceUpdate }: PaymentOptionsProps) {
             onRewardSelect={handleRewardSelect}
           >
             <div className="border rounded-lg p-4 border-green-500">
-              <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center justify-between">
                 <div>
                   <div className="flex items-center space-x-2">
                     <RadioGroupItem value="rewards" id="rewards" />
-                    <Label htmlFor="rewards">Pay With Rewards</Label>
+                    <Label htmlFor="rewards" className="text-sm">Pay With Rewards</Label>
                   </div>
                   <p className="text-xs text-gray-500 ml-6">
                     Powered by <span className="font-semibold">Monet</span>
@@ -127,13 +128,34 @@ export function PaymentOptions({ onPriceUpdate }: PaymentOptionsProps) {
 
           <div className="flex items-center justify-between space-x-2 border rounded-lg p-4">
             <div className="flex items-center space-x-2">
-              <Skeleton className="h-4 w-4 rounded-full" />
-              <Skeleton className="h-4 w-32" />
+              <RadioGroupItem value="card" id="card" />
+              <Label htmlFor="card" className="text-sm">Credit/Debit card</Label>
             </div>
             <div className="flex gap-2">
-              <Skeleton className="w-10 h-6" />
-              <Skeleton className="w-10 h-6" />
-              <Skeleton className="w-10 h-6" />
+              <div className="w-10 h-6 relative">
+                <Image
+                  src="/images/visa.svg"
+                  alt="Visa"
+                  fill
+                  className="object-contain"
+                />
+              </div>
+              <div className="w-10 h-6 relative">
+                <Image
+                  src="/images/mastercard.svg"
+                  alt="Mastercard"
+                  fill
+                  className="object-contain"
+                />
+              </div>
+              <div className="w-10 h-6 relative">
+                <Image
+                  src="/images/amex.svg"
+                  alt="American Express"
+                  fill
+                  className="object-contain"
+                />
+              </div>
             </div>
           </div>
 

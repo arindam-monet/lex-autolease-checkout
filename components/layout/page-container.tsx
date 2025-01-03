@@ -47,7 +47,7 @@ export function PageContainer({
           showSearch={showSearch}
         />
 
-        <main className="flex-1 container mx-auto px-4 py-6 pb-24">
+        <main className="flex-1 container mx-auto px-2 py-6 pb-24">
           {children}
         </main>
 
