@@ -46,7 +46,7 @@ export function RewardsSelectionDialog({
         </DialogHeader>
 
         <RadioGroup className="space-y-4">
-          <div className="flex items-center space-x-4 rounded-lg border p-4 cursor-pointer hover:bg-accent"
+          <div className="flex items-center space-x-4 rounded-lg border p-4 cursor-pointer bg-yellow-100 hover:bg-accent"
             onClick={() => onSelect(streamData[0])}>
             <RadioGroupItem value="lloyds" />
             <div className="flex-1">

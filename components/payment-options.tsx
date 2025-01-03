@@ -55,9 +55,14 @@ export function PaymentOptions({ onPriceUpdate }: PaymentOptionsProps) {
           >
             <div className="border rounded-lg p-4 border-green-500">
               <div className="flex items-center justify-between mb-4">
-                <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="rewards" id="rewards" />
-                  <Label htmlFor="rewards">Pay With Rewards</Label>
+                <div>
+                  <div className="flex items-center space-x-2">
+                    <RadioGroupItem value="rewards" id="rewards" />
+                    <Label htmlFor="rewards">Pay With Rewards</Label>
+                  </div>
+                  <p className="text-xs text-gray-500 ml-6">
+                    Powered by <span className="font-semibold">Monet</span>
+                  </p>
                 </div>
                 <span className="text-blue-600 text-sm cursor-pointer">
                   View offers {appliedReward && "(1 applied)"}
@@ -66,7 +71,7 @@ export function PaymentOptions({ onPriceUpdate }: PaymentOptionsProps) {
 
               {appliedReward && (
                 <div className="space-y-4 ml-6">
-                  <div>
+                  <div className="bg-yellow-50 p-2 rounded-md">
                     <h3 className="font-medium">LBG Loyalty Points</h3>
                     <p className="text-sm text-gray-600">
                       Points available for redemption: {storage.get('totalLloydsPoints')}

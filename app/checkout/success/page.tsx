@@ -177,6 +177,10 @@ export default function SuccessPage() {
           </div>
           <div className="space-y-3 text-sm">
             <div className="flex justify-between">
+              <span className="text-gray-600">Transaction ID</span>
+              <span className="font-medium">{storage.get('txnId')}</span>
+            </div>
+            <div className="flex justify-between">
               <span className="text-gray-600">Points Used</span>
               <span className="font-medium">{orderDetails.rewardsUsed} LBG points</span>
             </div>
@@ -185,11 +189,6 @@ export default function SuccessPage() {
               <span className="font-medium">{orderDetails.remainingPoints} LBG points</span>
             </div>
 
-            {/* transaction id */}
-            <div className="flex justify-between">
-              <span className="text-gray-600">Transaction ID</span>
-              <span className="font-medium">{storage.get('txnId')}</span>
-            </div>
           </div>
 
           {/* Action Button */}
