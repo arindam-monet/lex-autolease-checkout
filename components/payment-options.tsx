@@ -53,7 +53,7 @@ export function PaymentOptions({ onPriceUpdate }: PaymentOptionsProps) {
             amount={checkoutTotal}
             onRewardSelect={handleRewardSelect}
           >
-            <div className="border rounded-lg p-4">
+            <div className="border rounded-lg p-4 border-green-500">
               <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center space-x-2">
                   <RadioGroupItem value="rewards" id="rewards" />
