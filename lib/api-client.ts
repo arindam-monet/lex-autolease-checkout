@@ -65,7 +65,10 @@ export class RewardsApiClient {
   }
 
   async redeemPoints(payload: RedeemPointsRequest){
-    return this.request<ConsumerDashboardResponse>("/pay/redeem")
+    return this.request<ConsumerDashboardResponse>("/pay/redeem", {
+      method: "POST",
+      data: payload,
+    })
   }
 
   subscribeToRewardsStream(sessionId: string, consumerId: string, onData: (data: StreamResponse) => void) {

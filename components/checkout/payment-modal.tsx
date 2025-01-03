@@ -7,6 +7,7 @@ import { useState, useEffect } from 'react'
 import { PaymentForm } from './payment-form'
 import { useRouter } from 'next/navigation'
 import { Loader2 } from 'lucide-react'
+import { RewardsApiClient } from '@/lib/api-client'
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!)
 
@@ -21,11 +22,13 @@ export function PaymentModal({ isOpen, onClose, amount }: PaymentModalProps) {
   const [clientSecret, setClientSecret] = useState<string>()
   const [loading, setLoading] = useState(false)
 
+  const apiClient = new RewardsApiClient('apikey');
+
   useEffect(() => {
     async function createPaymentIntent() {
       if (!isOpen) return
       setLoading(true)
-      
+
       try {
         const response = await fetch('/api/checkout/payment', {
           method: 'POST',
@@ -46,7 +49,20 @@ export function PaymentModal({ isOpen, onClose, amount }: PaymentModalProps) {
     createPaymentIntent()
   }, [isOpen, amount, onClose])
 
-  const handlePaymentSuccess = () => {
+  const appliedRewardPoints = Number(localStorage.getItem('appliedRewardPoints')) || 0
+
+  const handlePaymentSuccess = async () => {
+
+    const redeemPointsRes = await apiClient.redeemPoints({
+      "apiKey": "sk_test_4eC39HqLyjWDarjtT1zdp7dc",
+      "secretKey": "sk_secret_Qlkfd8dfsdfs23fsdfs2323fsdf3",
+      "brandName": "LLOYD",
+      "totalPoints": appliedRewardPoints,
+      "consumerId": localStorage.getItem('consumerId') || '',
+    })
+
+    console.log(redeemPointsRes, 'result')
+
     router.push('/checkout/success')
     onClose()
   }

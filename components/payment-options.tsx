@@ -34,6 +34,10 @@ export function PaymentOptions({ onPriceUpdate }: PaymentOptionsProps) {
     onPriceUpdate(finalPrice)
   }, [finalPrice, onPriceUpdate])
 
+  useEffect(() => {
+    localStorage.setItem('appliedRewardPoints', appliedRewardAmount.toString())
+  }, [appliedReward, finalPrice])
+
 
 
   return (
@@ -90,7 +94,13 @@ export function PaymentOptions({ onPriceUpdate }: PaymentOptionsProps) {
                         <span>£{checkoutTotal.toFixed(2)}</span>
                       </div>
                       <div className="flex justify-between text-green-600">
-                        <span>Reward points</span>
+                        <div className="flex flex-col gap-2"><span>Reward points</span>
+                          {appliedReward && (
+                            <span className="text-green-600 block mt-1">
+                              {Math.round((rewardPercentage / 50) * Number(localStorage.getItem('appliedRewardPoints')))} points applied
+                            </span>
+                          )}
+                        </div>
                         <span>-£{appliedRewardAmount.toFixed(2)}</span>
                       </div>
                       <div className="flex justify-between">

@@ -22,8 +22,6 @@ export default function CheckoutPage() {
 
   const { isOpen, closePayment } = usePayment()
 
-  const apiClient = new RewardsApiClient('apiKey');
-
   const handleProceedToPayment = async () => {
     console.log('handle proceed to payment')
     try {
@@ -42,16 +40,6 @@ export default function CheckoutPage() {
       })
 
       const { sessionId } = await response.json()
-
-      const redeemPointsRes = await apiClient.redeemPoints({
-        "apiKey": "sk_test_4eC39HqLyjWDarjtT1zdp7dc",
-        "secretKey": "sk_secret_Qlkfd8dfsdfs23fsdfs2323fsdf3",
-        "brandName": "LLOYD",
-        "totalPoints": Number(localStorage.getItem('totalLloydsPoints')) || 0,
-        "consumerId": localStorage.getItem('consumerId') || '',
-      })
-
-      console.log(redeemPointsRes, 'result')
 
 
       const result = await stripe.redirectToCheckout({
