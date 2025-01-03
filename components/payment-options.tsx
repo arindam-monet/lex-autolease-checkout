@@ -6,6 +6,7 @@ import { useState, useEffect } from 'react'
 import { StreamResponse } from '@/types/consumer'
 import { calculateLloydsPoints, LBGtoGBP, maxRewardAmount } from "@/lib/utils"
 import { Slider } from "./ui/slider"
+import { Skeleton } from "./ui/skeleton"
 
 interface PaymentOptionsProps {
   onPriceUpdate: (price: number) => void;
@@ -51,7 +52,7 @@ export function PaymentOptions({ onPriceUpdate }: PaymentOptionsProps) {
                   <RadioGroupItem value="rewards" id="rewards" />
                   <Label htmlFor="rewards">Pay With Rewards</Label>
                 </div>
-                <span className="text-blue-600 text-sm">
+                <span className="text-blue-600 text-sm cursor-pointer">
                   View offers {appliedReward && "(1 applied)"}
                 </span>
               </div>
@@ -109,53 +110,25 @@ export function PaymentOptions({ onPriceUpdate }: PaymentOptionsProps) {
 
           <div className="flex items-center justify-between space-x-2 border rounded-lg p-4">
             <div className="flex items-center space-x-2">
-              <RadioGroupItem value="card" id="card" />
-              <Label htmlFor="card">Credit/Debit card</Label>
+              <Skeleton className="h-4 w-4 rounded-full" />
+              <Skeleton className="h-4 w-32" />
             </div>
             <div className="flex gap-2">
-              <div className="w-10 h-6 relative">
-                <Image
-                  src="/images/visa.svg"
-                  alt="Visa"
-                  fill
-                  className="object-contain"
-                />
-              </div>
-              <div className="w-10 h-6 relative">
-                <Image
-                  src="/images/mastercard.svg"
-                  alt="Mastercard"
-                  fill
-                  className="object-contain"
-                />
-              </div>
-              <div className="w-10 h-6 relative">
-                <Image
-                  src="/images/amex.svg"
-                  alt="American Express"
-                  fill
-                  className="object-contain"
-                />
-              </div>
+              <Skeleton className="w-10 h-6" />
+              <Skeleton className="w-10 h-6" />
+              <Skeleton className="w-10 h-6" />
             </div>
           </div>
 
           <div className="flex items-center justify-between space-x-2 border rounded-lg p-4">
-            <div className="flex-1">
+            <div className="flex-1 space-y-2">
               <div className="flex items-center space-x-2">
-                <RadioGroupItem value="paypal" id="paypal" />
-                <Label htmlFor="paypal">PayPal</Label>
+                <Skeleton className="h-4 w-4 rounded-full" />
+                <Skeleton className="h-4 w-24" />
               </div>
-              <p className="text-sm text-gray-600 ml-6">Pay now or in 3 interest-free payments</p>
+              <Skeleton className="h-3 w-48 ml-6" />
             </div>
-            <div className="w-16 h-6 relative">
-              <Image
-                src="/images/paypal.svg"
-                alt="PayPal"
-                fill
-                className="object-contain"
-              />
-            </div>
+            <Skeleton className="w-16 h-6" />
           </div>
         </div>
       </RadioGroup>
