@@ -23,7 +23,7 @@ export function RewardsSelectionDialog({
   onSelect,
   onDialogClose
 }: RewardsSelectionDialogProps) {
-  
+
   useEffect(() => {
     if (!open && onDialogClose) {
       onDialogClose()
@@ -31,6 +31,11 @@ export function RewardsSelectionDialog({
   }, [open, onDialogClose])
 
   const totalLloydsPoints = calculateLloydsPoints(streamData);
+
+  useEffect(() => {
+    if (!totalLloydsPoints) return;
+    localStorage.setItem('totalLloydsPoints', totalLloydsPoints.toString());
+  }, [totalLloydsPoints])
 
   return (
     <Dialog open={open} onOpenChange={onClose}>

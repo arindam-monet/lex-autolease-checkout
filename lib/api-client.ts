@@ -1,5 +1,5 @@
 import { ConsumerLoginRequest, ConsumerLoginResponse, ConsumerLoginVerifyOtpRequest, ConsumerLoginVerifyOtpResponse } from "@/types/auth"
-import { ConsumerDashboardResponse, ConsumerLinkedBrandAccountResponse, StreamResponse } from "@/types/consumer"
+import { ConsumerDashboardResponse, ConsumerLinkedBrandAccountResponse, RedeemPointsRequest, StreamResponse } from "@/types/consumer"
 import axios, { AxiosInstance } from "axios"
 
 export class RewardsApiClient {
@@ -64,8 +64,8 @@ export class RewardsApiClient {
     return this.request<ConsumerDashboardResponse>("/consumers/dashboard")
   }
 
-  async redeemPoints(){
-    return this.request<ConsumerDashboardResponse>("/consumers/redeem-points")
+  async redeemPoints(payload: RedeemPointsRequest){
+    return this.request<ConsumerDashboardResponse>("/pay/redeem")
   }
 
   subscribeToRewardsStream(sessionId: string, consumerId: string, onData: (data: StreamResponse) => void) {

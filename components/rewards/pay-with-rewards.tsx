@@ -43,6 +43,7 @@ export function PayWithRewards({
   const handlePhoneVerified = async () => {
     try {
       const dashboardData = await apiClient.getConsumerDashboardData();
+      localStorage.setItem("consumerId", dashboardData.session.consumerId);
       setStreamData([]);
 
       const cleanup = apiClient.subscribeToRewardsStream(

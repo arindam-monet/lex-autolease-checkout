@@ -62,7 +62,7 @@ export function PaymentOptions({ onPriceUpdate }: PaymentOptionsProps) {
                   <div>
                     <h3 className="font-medium">LBG Loyalty Points</h3>
                     <p className="text-sm text-gray-600">
-                      Points available for redemption: {availablePoints}
+                      Points available for redemption: {localStorage.getItem('totalLloydsPoints')}
                     </p>
                   </div>
 

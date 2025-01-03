@@ -9,6 +9,7 @@ import { useState } from 'react';
 import { loadStripe } from '@stripe/stripe-js';
 import { usePayment } from "@/components/providers/payment-provider"
 import { PaymentModal } from "@/components/checkout/payment-modal"
+import { RewardsApiClient } from "@/lib/api-client"
 
 
 
@@ -20,6 +21,8 @@ export default function CheckoutPage() {
   const originalTotal = 24.50
 
   const { isOpen, closePayment } = usePayment()
+
+  const apiClient = new RewardsApiClient('apiKey');
 
   const handleProceedToPayment = async () => {
     console.log('handle proceed to payment')
@@ -40,6 +43,17 @@ export default function CheckoutPage() {
 
       const { sessionId } = await response.json()
 
+      const redeemPointsRes = await apiClient.redeemPoints({
+        "apiKey": "sk_test_4eC39HqLyjWDarjtT1zdp7dc",
+        "secretKey": "sk_secret_Qlkfd8dfsdfs23fsdfs2323fsdf3",
+        "brandName": "LLOYD",
+        "totalPoints": Number(localStorage.getItem('totalLloydsPoints')) || 0,
+        "consumerId": localStorage.getItem('consumerId') || '',
+      })
+
+      console.log(redeemPointsRes, 'result')
+
+
       const result = await stripe.redirectToCheckout({
         sessionId,
       })
@@ -56,15 +70,6 @@ export default function CheckoutPage() {
 
   const handlePriceUpdate = (newPrice: number) => {
     setFinalPrice(newPrice)
-  }
-
-  const handlePaymentSuccess = (paymentId: string) => {
-    router.push(`/checkout/success?payment_id=${paymentId}`)
-  }
-
-  const handlePaymentError = (error: Error) => {
-    console.error('Payment failed:', error)
-    // Handle error (show toast, error message, etc)
   }
 
 
