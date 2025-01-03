@@ -9,7 +9,6 @@ import { useState } from 'react';
 import { loadStripe } from '@stripe/stripe-js';
 import { usePayment } from "@/components/providers/payment-provider"
 import { PaymentModal } from "@/components/checkout/payment-modal"
-import { RewardsApiClient } from "@/lib/api-client"
 
 
 

@@ -1,6 +1,7 @@
 import { ConsumerLoginRequest, ConsumerLoginResponse, ConsumerLoginVerifyOtpRequest, ConsumerLoginVerifyOtpResponse } from "@/types/auth"
 import { ConsumerDashboardResponse, ConsumerLinkedBrandAccountResponse, RedeemPointsRequest, StreamResponse } from "@/types/consumer"
 import axios, { AxiosInstance } from "axios"
+import { storage } from "./storage"
 
 export class RewardsApiClient {
   private apiKey: string
@@ -17,7 +18,7 @@ export class RewardsApiClient {
     })
 
     this.axiosInstance.interceptors.request.use((config) => {
-      const accessToken = localStorage.getItem("accessToken");
+      const accessToken = storage.get("accessToken");
       if (accessToken) {
         config.headers.Authorization = `Bearer ${accessToken}`;
       }

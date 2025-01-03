@@ -7,6 +7,7 @@ import { StreamResponse } from '@/types/consumer'
 import { calculateLloydsPoints, LBGtoGBP, maxRewardAmount } from "@/lib/utils"
 import { Slider } from "./ui/slider"
 import { Skeleton } from "./ui/skeleton"
+import { storage } from "@/lib/storage"
 
 interface PaymentOptionsProps {
   onPriceUpdate: (price: number) => void;
@@ -35,7 +36,7 @@ export function PaymentOptions({ onPriceUpdate }: PaymentOptionsProps) {
   }, [finalPrice, onPriceUpdate])
 
   useEffect(() => {
-    localStorage.setItem('appliedRewardPoints', appliedRewardAmount.toString())
+    storage.set('appliedRewardPoints', appliedRewardAmount.toString())
   }, [appliedReward, finalPrice])
 
 
@@ -66,7 +67,7 @@ export function PaymentOptions({ onPriceUpdate }: PaymentOptionsProps) {
                   <div>
                     <h3 className="font-medium">LBG Loyalty Points</h3>
                     <p className="text-sm text-gray-600">
-                      Points available for redemption: {localStorage.getItem('totalLloydsPoints')}
+                      Points available for redemption: {storage.get('totalLloydsPoints')}
                     </p>
                   </div>
 
@@ -97,7 +98,7 @@ export function PaymentOptions({ onPriceUpdate }: PaymentOptionsProps) {
                         <div className="flex flex-col gap-2"><span>Reward points</span>
                           {appliedReward && (
                             <span className="text-green-600 block mt-1">
-                              {Math.round((rewardPercentage / 50) * Number(localStorage.getItem('appliedRewardPoints')))} points applied
+                              {Math.round((rewardPercentage / 50) * Number(storage.get('appliedRewardPoints')))} points applied
                             </span>
                           )}
                         </div>

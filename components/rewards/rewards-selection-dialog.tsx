@@ -7,6 +7,7 @@ import { StreamResponse } from "@/types/consumer"
 import { calculateLloydsPoints } from "@/lib/utils"
 import { Skeleton } from "../ui/skeleton"
 import { useEffect } from "react"
+import { storage } from "@/lib/storage"
 
 interface RewardsSelectionDialogProps {
   open: boolean
@@ -34,7 +35,7 @@ export function RewardsSelectionDialog({
 
   useEffect(() => {
     if (!totalLloydsPoints) return;
-    localStorage.setItem('totalLloydsPoints', totalLloydsPoints.toString());
+    storage.set('totalLloydsPoints', totalLloydsPoints.toString());
   }, [totalLloydsPoints])
 
   return (

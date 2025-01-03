@@ -11,6 +11,7 @@ import { RewardsApiClient } from "@/lib/api-client"
 import { PhoneInput } from "@/components/ui/phone-input"
 import { parsePhoneNumber } from "react-phone-number-input"
 import { InputOTP, InputOTPGroup, InputOTPSlot } from "../ui/input-otp"
+import { storage } from "@/lib/storage"
 
 interface PhoneVerificationDialogProps {
   open: boolean
@@ -67,8 +68,8 @@ export function PhoneVerificationDialog({
       });
 
       if (result.tokens) {
-        localStorage.setItem('accessToken', result.tokens.access.token);
-        localStorage.setItem('refreshToken', result.tokens.refresh.token);
+        storage.set('accessToken', result.tokens.access.token);
+        storage.set('refreshToken', result.tokens.refresh.token);
         onVerified(phoneNumber);
         setStep('phone');
         onClose();

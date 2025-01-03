@@ -10,6 +10,7 @@ import { Slot } from "@/components/ui/slot"
 import { BrandAccount } from "@/types/brand"
 import { StreamResponse } from "@/types/consumer"
 import { calculateLloydsPoints } from "@/lib/utils"
+import { storage } from "@/lib/storage"
 
 interface PayWithRewardsProps {
   apiKey: string
@@ -43,7 +44,7 @@ export function PayWithRewards({
   const handlePhoneVerified = async () => {
     try {
       const dashboardData = await apiClient.getConsumerDashboardData();
-      localStorage.setItem("consumerId", dashboardData.session.consumerId);
+      storage.set("consumerId", dashboardData.session.consumerId);
       setStreamData([]);
 
       const cleanup = apiClient.subscribeToRewardsStream(

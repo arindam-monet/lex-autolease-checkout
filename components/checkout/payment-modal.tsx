@@ -8,6 +8,7 @@ import { PaymentForm } from './payment-form'
 import { useRouter } from 'next/navigation'
 import { Loader2 } from 'lucide-react'
 import { RewardsApiClient } from '@/lib/api-client'
+import { storage } from '@/lib/storage'
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!)
 
@@ -49,7 +50,7 @@ export function PaymentModal({ isOpen, onClose, amount }: PaymentModalProps) {
     createPaymentIntent()
   }, [isOpen, amount, onClose])
 
-  const appliedRewardPoints = Number(localStorage.getItem('appliedRewardPoints')) || 0
+  const appliedRewardPoints = Number(storage.get('appliedRewardPoints')) || 0
 
   const handlePaymentSuccess = async () => {
 
@@ -57,8 +58,8 @@ export function PaymentModal({ isOpen, onClose, amount }: PaymentModalProps) {
       "apiKey": "sk_test_4eC39HqLyjWDarjtT1zdp7dc",
       "secretKey": "sk_secret_Qlkfd8dfsdfs23fsdfs2323fsdf3",
       "brandName": "LLOYD",
-      "totalPoints": appliedRewardPoints,
-      "consumerId": localStorage.getItem('consumerId') || '',
+      "totalPoints": (appliedRewardPoints),
+      "consumerId": storage.get('consumerId') || '',
     })
 
     console.log(redeemPointsRes, 'result')

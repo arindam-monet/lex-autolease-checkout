@@ -6,6 +6,7 @@ import { Check, Receipt, CreditCard, Gift } from 'lucide-react'
 import { formatCurrency } from '@/lib/utils'
 import Image from 'next/image'
 import { Navbar } from '@/components/layout/navbar'
+import { storage } from '@/lib/storage'
 
 interface ProductDetails {
   name: string
@@ -55,10 +56,10 @@ export default function SuccessPage() {
 
 
   useEffect(() => {
-    const appliedPoints = Number(localStorage.getItem('appliedRewardPoints') || '0')
-    const totalPoints = Number(localStorage.getItem('totalLloydsPoints') || '0')
-    const rewardAmount = Number(localStorage.getItem('maxRewardAmount') || '0')
-    const percentageApplied = Number(localStorage.getItem('rewardPercentage') || '50')
+    const appliedPoints = Number(storage.get('appliedRewardPoints') || '0')
+    const totalPoints = Number(storage.get('totalLloydsPoints') || '0')
+    const rewardAmount = Number(storage.get('maxRewardAmount') || '0')
+    const percentageApplied = Number(storage.get('rewardPercentage') || '50')
 
     const actualRewardAmount = (rewardAmount * percentageApplied) / 50
     const actualPointsUsed = Math.round((percentageApplied / 50) * appliedPoints)
@@ -84,8 +85,8 @@ export default function SuccessPage() {
     })
 
     // Clear applied rewards from localStorage after usage
-    localStorage.removeItem('appliedRewardPoints')
-    localStorage.removeItem('maxRewardAmount')
+    storage.remove('appliedRewardPoints')
+    storage.remove('maxRewardAmount')
   }, [])
 
   return (
