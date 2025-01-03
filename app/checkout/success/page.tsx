@@ -189,20 +189,20 @@ export default function SuccessPage() {
             <div className="flex justify-between">
               <span className="text-gray-600">Transaction ID</span>
               <span className="font-medium">{storage.get('txnId')}</span>
+            </div>
           </div>
-        </div>
 
-        {/* Action Button */}
-        <div className="text-center">
-          <button
-            onClick={() => router.push('/')}
-            className="bg-black text-white px-8 py-3 rounded-lg hover:bg-gray-800 transition-colors"
-          >
-            Continue Shopping
-          </button>
+          {/* Action Button */}
+          <div className="text-center">
+            <button
+              onClick={() => router.push('/')}
+              className="bg-black text-white px-8 py-3 rounded-lg hover:bg-gray-800 transition-colors"
+            >
+              Continue Shopping
+            </button>
+          </div>
         </div>
       </div>
     </>
-
   )
 }
