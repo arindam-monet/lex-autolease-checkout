@@ -6,12 +6,14 @@ import { Button } from "@/components/ui/button"
 import { StreamResponse } from "@/types/consumer"
 import { calculateLloydsPoints } from "@/lib/utils"
 import { Skeleton } from "../ui/skeleton"
+import { useEffect } from "react"
 
 interface RewardsSelectionDialogProps {
   open: boolean
   onClose: () => void
   streamData: StreamResponse[]
   onSelect: (reward: StreamResponse) => void
+  onDialogClose?: () => void
 }
 
 export function RewardsSelectionDialog({
@@ -19,7 +21,15 @@ export function RewardsSelectionDialog({
   onClose,
   streamData,
   onSelect,
+  onDialogClose
 }: RewardsSelectionDialogProps) {
+  
+  useEffect(() => {
+    if (!open && onDialogClose) {
+      onDialogClose()
+    }
+  }, [open, onDialogClose])
+
   const totalLloydsPoints = calculateLloydsPoints(streamData);
 
   return (

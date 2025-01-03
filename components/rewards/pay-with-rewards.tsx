@@ -36,6 +36,10 @@ export function PayWithRewards({
 
   const Trigger = asChild ? Slot : "div"
 
+  const handleDialogClose = () => {
+    setStreamData([])
+  }
+
   const handlePhoneVerified = async () => {
     try {
       const dashboardData = await apiClient.getConsumerDashboardData();
@@ -44,7 +48,14 @@ export function PayWithRewards({
         dashboardData.session.sessionId,
         dashboardData.session.consumerId,
         (data) => {
-          setStreamData(prev => [...prev, data])
+          setStreamData(prev => {
+            // Check if response already exists for this account
+            const exists = prev.some(item =>
+              item.account.id === data.account.id
+            )
+            if (exists) return prev
+            return [...prev, data]
+          })
         }
       )
 
@@ -97,6 +108,7 @@ export function PayWithRewards({
         onClose={() => setShowRewardsDialog(false)}
         streamData={streamData}
         onSelect={handleRewardSelect}
+        onDialogClose={handleDialogClose}
       />
     </div>
   )
