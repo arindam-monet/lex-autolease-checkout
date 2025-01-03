@@ -39,14 +39,14 @@ export function PaymentOptions({ onPriceUpdate }: PaymentOptionsProps) {
     console.log(appliedRewardAmount, 'appliedReward')
     storage.set('appliedRewardPoints', GBPtoLBG(Number(appliedRewardAmount)).toString())
     storage.set('appliedRewardAmount', appliedRewardAmount.toString())
-  }, [appliedReward])
+  }, [rewardPercentage, appliedRewardAmount])
 
 
 
   return (
     <div className="space-y-6">
       <h2 className="text-xl font-bold">Payment options</h2>
-      <RadioGroup defaultValue={appliedReward ? "rewards" : undefined}>
+      <RadioGroup defaultValue={"rewards"}>
         <div className="space-y-4">
           <PayWithRewards
             apiKey="your_api_key_here"
@@ -57,7 +57,7 @@ export function PaymentOptions({ onPriceUpdate }: PaymentOptionsProps) {
               <div className="flex items-center justify-between">
                 <div>
                   <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="rewards" id="rewards" />
+                    <RadioGroupItem value="rewards" id="rewards" defaultChecked/>
                     <Label htmlFor="rewards" className="text-sm">Pay With Rewards</Label>
                   </div>
                   <p className="text-xs text-gray-500 ml-6">
