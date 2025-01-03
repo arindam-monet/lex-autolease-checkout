@@ -49,27 +49,23 @@ export default function SuccessPage() {
     },
     paymentBreakdown: {
       subtotal: 24.50,
-      rewards: 5.00,
-      finalAmount: 19.50
+      rewards: 0,
+      finalAmount: 0
     }
   })
 
+  const appliedRewardPoints = Number(storage.get('appliedRewardPoints')) || 0
+  const appliedRewardAmount = Number(storage.get('appliedRewardAmount')) || 0
 
   useEffect(() => {
-    const appliedPoints = Number(storage.get('appliedRewardPoints') || '0')
     const totalPoints = Number(storage.get('totalLloydsPoints') || '0')
-    const rewardAmount = Number(storage.get('maxRewardAmount') || '0')
-    const percentageApplied = Number(storage.get('rewardPercentage') || '50')
-
-    const actualRewardAmount = (rewardAmount * percentageApplied) / 50
-    const actualPointsUsed = Math.round((percentageApplied / 50) * appliedPoints)
 
     setOrderDetails({
       orderId: 'ORD-2024-001',
       date: new Date().toLocaleDateString(),
       total: 24.50,
-      rewardsUsed: actualPointsUsed,
-      remainingPoints: totalPoints - actualPointsUsed,
+      rewardsUsed: appliedRewardPoints,
+      remainingPoints: totalPoints - appliedRewardPoints,
       product: {
         name: "FINERY Kimmy Dress 22",
         sku: "tue145514061",
@@ -79,14 +75,10 @@ export default function SuccessPage() {
       },
       paymentBreakdown: {
         subtotal: 24.50,
-        rewards: actualRewardAmount,
-        finalAmount: 24.50 - actualRewardAmount
+        rewards: appliedRewardAmount,
+        finalAmount: 24.50 - appliedRewardAmount
       }
     })
-
-    // Clear applied rewards from localStorage after usage
-    storage.remove('appliedRewardPoints')
-    storage.remove('maxRewardAmount')
   }, [])
 
   return (

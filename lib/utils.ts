@@ -15,6 +15,10 @@ export const maxRewardAmount = (LBGPoints: number, checkoutTotal: number, maxPer
   return Math.min(LBGtoGBP(LBGPoints), checkoutTotal * maxPercentage)
 }
 
+export const GBPtoLBG = (gbpAmount: number, conversionRate = 0.1): number => {
+  return Math.round(gbpAmount / conversionRate);
+};
+
 export const calculateLloydsPoints = (streamData: StreamResponse[]): number => {
   return streamData
     .filter(data => data.account.brand.parentBrand === 'LLOYD')

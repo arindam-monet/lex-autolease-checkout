@@ -4,7 +4,7 @@ import Image from "next/image"
 import { PayWithRewards } from "./rewards/pay-with-rewards"
 import { useState, useEffect } from 'react'
 import { StreamResponse } from '@/types/consumer'
-import { calculateLloydsPoints, LBGtoGBP, maxRewardAmount } from "@/lib/utils"
+import { calculateLloydsPoints, GBPtoLBG, LBGtoGBP, maxRewardAmount } from "@/lib/utils"
 import { Slider } from "./ui/slider"
 import { Skeleton } from "./ui/skeleton"
 import { storage } from "@/lib/storage"
@@ -36,8 +36,10 @@ export function PaymentOptions({ onPriceUpdate }: PaymentOptionsProps) {
   }, [finalPrice, onPriceUpdate])
 
   useEffect(() => {
-    storage.set('appliedRewardPoints', appliedRewardAmount.toString())
-  }, [appliedReward, finalPrice])
+    console.log(appliedRewardAmount, 'appliedReward')
+    storage.set('appliedRewardPoints', GBPtoLBG(Number(appliedRewardAmount)).toString())
+    storage.set('appliedRewardAmount', appliedRewardAmount.toString())
+  }, [appliedReward])
 
 
 
@@ -94,11 +96,11 @@ export function PaymentOptions({ onPriceUpdate }: PaymentOptionsProps) {
                         <span>Bag Item (1 item)</span>
                         <span>£{checkoutTotal.toFixed(2)}</span>
                       </div>
-                      <div className="flex justify-between text-green-600">
-                        <div className="flex flex-col gap-2"><span>Reward points</span>
+                      <div className="flex justify-between">
+                        <div className="flex flex-col"><span>Reward points</span>
                           {appliedReward && (
-                            <span className="text-green-600 block mt-1">
-                              {Math.round((rewardPercentage / 50) * Number(storage.get('appliedRewardPoints')))} points applied
+                            <span className="text-xs text-green-600 block mt-1">
+                              {(storage.get('appliedRewardPoints'))} points applied
                             </span>
                           )}
                         </div>
