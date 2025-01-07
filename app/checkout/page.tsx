@@ -7,7 +7,7 @@ import { usePayment } from "@/components/providers/payment-provider"
 import { PaymentModal } from "@/components/checkout/payment-modal"
 import { Button } from "@/components/ui/button";
 import { mockFormData } from "@/lib/mock-data";
-import { GBPtoLBG, LBGtoGBP } from "@/lib/utils";
+import { GBPtoLBG, LBGtoGBP, maxApplicablePoints } from "@/lib/utils";
 import { storage } from "@/lib/storage";
 import { Slider } from "@/components/ui/slider";
 import { Label } from "@/components/ui/label";
@@ -25,13 +25,18 @@ export default function CheckoutPage() {
   const [finalPrice, setFinalPrice] = useState(originalTotal);
 
   const checkoutTotal = Number(mockFormData.feeDue);
-  const [rewardPercentage, setRewardPercentage] = useState(50) // Default to max
+  const [rewardPercentage, setRewardPercentage] = useState(100) // Default to max
   const availablePoints = Number(storage.get('totalLloydsPoints')) || 0;
 
   const [useRewards, setUseRewards] = useState(availablePoints > 0)
 
-  const maxReward = Math.min(LBGtoGBP(availablePoints), checkoutTotal * 0.5);
-  const appliedRewardAmount = (maxReward * rewardPercentage) / 50 // Since max percentage is 50%
+  const maxRedeemablePoints =  maxApplicablePoints(checkoutTotal);
+  const actualMaxPoints = Math.min(availablePoints, maxRedeemablePoints);
+
+
+  // Calculate applied points based on percentage of max redeemable
+  const appliedPoints = Math.round((actualMaxPoints * rewardPercentage) / 90);
+  const appliedRewardAmount = appliedPoints / 10; // Convert points 
 
 
   const handleProceedToPayment = async () => {
@@ -72,7 +77,13 @@ export default function CheckoutPage() {
     setFinalPrice(newPrice)
   }
 
-  useEffect(() => { }, [])
+  useEffect(() => {
+    const newPrice = checkoutTotal - appliedRewardAmount
+    setFinalPrice(newPrice)
+    storage.set('appliedRewardPoints', appliedPoints.toString())
+
+
+  }, [rewardPercentage])
 
 
   return (
@@ -100,30 +111,30 @@ export default function CheckoutPage() {
                     <Label htmlFor="use-rewards" className="text-lg font-medium">LBG Loyalty Points</Label>
                   </div>
                 </div>
-                <span className="text-sm text-gray-600">1 LBG Point = £x</span>
+                <span className="text-sm text-gray-600">1 LBG Point = 0.1 £</span>
               </div>
 
               {useRewards && (
                 <>
                   <div className="space-y-2">
-                    <p className="text-xl text-purple-800 font-semibold">{availablePoints} Points Available</p>
+                    <p className="text-lg text-purple-800 font-semibold">{availablePoints} Points Available (Max redeemable: {maxRedeemablePoints})</p>
 
                     <div className="relative pt-2">
                       <Slider
                         value={[rewardPercentage]}
                         onValueChange={([value]) => setRewardPercentage(value)}
-                        max={50}
+                        max={90}
                         step={1}
                         className="w-full"
                       />
                       <div className="flex justify-between text-sm text-gray-500 mt-1">
                         <span>0</span>
-                        <span>{availablePoints}</span>
+                        <span>{actualMaxPoints}</span>
                       </div>
                     </div>
 
                     <p className="text-green-600 text-lg">
-                      Using {Math.round(appliedRewardAmount * 100)} Points (Balance: {availablePoints - Math.round(appliedRewardAmount * 100)} Points)
+                      Using {appliedPoints} Points (Balance: {availablePoints - appliedPoints} Points)
                     </p>
                   </div>
                 </>

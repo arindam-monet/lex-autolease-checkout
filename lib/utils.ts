@@ -11,8 +11,12 @@ export const LBGtoGBP = (lbgPoints: number, conversionRate = 0.1): number => {
   return lbgPoints * conversionRate
 }
 
-export const maxRewardAmount = (LBGPoints: number, checkoutTotal: number, maxPercentage = 0.5): number => {
+export const maxRewardAmount = (LBGPoints: number, checkoutTotal: number, maxPercentage = 0.9): number => {
   return Math.min(LBGtoGBP(LBGPoints), checkoutTotal * maxPercentage)
+}
+
+export const maxApplicablePoints = (checkoutTotal: number, maxPercentage = 0.9): number => {
+  return checkoutTotal * 10 * maxPercentage
 }
 
 export const GBPtoLBG = (gbpAmount: number, conversionRate = 0.1): number => {

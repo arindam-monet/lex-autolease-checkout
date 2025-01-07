@@ -3,11 +3,11 @@
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { Check, Receipt, CreditCard, Gift } from 'lucide-react'
-import { formatCurrency, formatTransactionId } from '@/lib/utils'
+import { formatCurrency, formatTransactionId, LBGtoGBP } from '@/lib/utils'
 import Image from 'next/image'
-import { Navbar } from '@/components/layout/navbar'
 import { storage } from '@/lib/storage'
 import { Button } from '@/components/ui/button'
+import { mockFormData } from '@/lib/mock-data'
 
 interface ProductDetails {
   name: string
@@ -37,7 +37,7 @@ export default function SuccessPage() {
   const [orderDetails, setOrderDetails] = useState<OrderDetails>({
     orderId: 'ORD-2024-001',
     date: '',
-    total: 24.50,
+    total: 0,
     rewardsUsed: 500,
     remainingPoints: 1500,
     transactionId: '',
@@ -49,7 +49,7 @@ export default function SuccessPage() {
       price: 24.50
     },
     paymentBreakdown: {
-      subtotal: 24.50,
+      subtotal: 0,
       rewards: 0,
       finalAmount: 0
     }
@@ -65,7 +65,7 @@ export default function SuccessPage() {
     setOrderDetails({
       orderId: 'ORD-2024-001',
       date: new Date().toLocaleDateString(),
-      total: 24.50,
+      total: Number(mockFormData.feeDue),
       rewardsUsed: appliedRewardPoints,
       remainingPoints: totalPoints - appliedRewardPoints,
       transactionId: transactionId,
@@ -77,9 +77,9 @@ export default function SuccessPage() {
         price: 24.50
       },
       paymentBreakdown: {
-        subtotal: 24.50,
-        rewards: appliedRewardAmount,
-        finalAmount: 24.50 - appliedRewardAmount
+        subtotal: Number(mockFormData.feeDue),
+        rewards: LBGtoGBP(appliedRewardPoints),
+        finalAmount: Number(mockFormData.feeDue) - LBGtoGBP(appliedRewardPoints)
       }
     })
   }, [])
