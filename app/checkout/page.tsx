@@ -1,6 +1,5 @@
 'use client'
 
-import { useRouter } from "next/navigation"
 import { PaymentOptions } from "@/components/payment-options"
 import { useEffect, useState } from 'react';
 import { loadStripe } from '@stripe/stripe-js';
@@ -8,10 +7,12 @@ import { usePayment } from "@/components/providers/payment-provider"
 import { PaymentModal } from "@/components/checkout/payment-modal"
 import { Button } from "@/components/ui/button";
 import { mockFormData } from "@/lib/mock-data";
-import { calculateLloydsPoints, GBPtoLBG, LBGtoGBP } from "@/lib/utils";
+import { GBPtoLBG, LBGtoGBP } from "@/lib/utils";
 import { storage } from "@/lib/storage";
 import { Slider } from "@/components/ui/slider";
 import { Label } from "@/components/ui/label";
+import { Checkbox } from "@/components/ui/checkbox";
+import Image from "next/image";
 
 
 
@@ -26,6 +27,8 @@ export default function CheckoutPage() {
   const checkoutTotal = Number(mockFormData.feeDue);
   const [rewardPercentage, setRewardPercentage] = useState(50) // Default to max
   const availablePoints = Number(storage.get('totalLloydsPoints')) || 0;
+
+  const [useRewards, setUseRewards] = useState(availablePoints > 0)
 
   const maxReward = Math.min(LBGtoGBP(availablePoints), checkoutTotal * 0.5);
   const appliedRewardAmount = (maxReward * rewardPercentage) / 50 // Since max percentage is 50%
@@ -69,10 +72,7 @@ export default function CheckoutPage() {
     setFinalPrice(newPrice)
   }
 
-  useEffect(() => {
-    storage.set('appliedRewardPoints', GBPtoLBG(Number(appliedRewardAmount)).toString())
-    storage.set('appliedRewardAmount', appliedRewardAmount.toString())
-  }, [rewardPercentage, appliedRewardAmount])
+  useEffect(() => { }, [])
 
 
   return (
@@ -86,30 +86,49 @@ export default function CheckoutPage() {
 
 
           <div className="border rounded-lg p-4 border-green-500">
-
             <div className="space-y-4">
-              <div className="rounded-md">
-                <h3 className="font-medium">LBG Loyalty Points</h3>
-                <p className="text-sm text-gray-600">
-                  Points available: <span className="font-semibold">{storage.get('totalLloydsPoints')}</span>
-                </p>
-                <p className="text-sm text-blue-600">
-                  Points available for redemption: <span className="font-semibold">{storage.get('appliedRewardPoints')}</span>
-                </p>
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <Checkbox
+                    id="use-rewards"
+                    checked={useRewards}
+                    onCheckedChange={(checked) => setUseRewards(checked as boolean)}
+                    disabled={!availablePoints}
+                  />
+                  <div className="flex items-center gap-2">
+                    <Image src={'/images/lloyds-icon.svg'} alt="Lloyds Rewards" width={20} height={20} />
+                    <Label htmlFor="use-rewards" className="text-lg font-medium">LBG Loyalty Points</Label>
+                  </div>
+                </div>
+                <span className="text-sm text-gray-600">1 LBG Point = £x</span>
               </div>
 
-              <div className="space-y-2">
-                <Label>Select reward amount</Label>
-                <Slider
-                  value={[rewardPercentage]}
-                  onValueChange={([value]) => setRewardPercentage(value)}
-                  max={50}
-                  step={1}
-                  className="w-full"
-                />
-              </div>
+              {useRewards && (
+                <>
+                  <div className="space-y-2">
+                    <p className="text-xl text-purple-800 font-semibold">{availablePoints} Points Available</p>
+
+                    <div className="relative pt-2">
+                      <Slider
+                        value={[rewardPercentage]}
+                        onValueChange={([value]) => setRewardPercentage(value)}
+                        max={50}
+                        step={1}
+                        className="w-full"
+                      />
+                      <div className="flex justify-between text-sm text-gray-500 mt-1">
+                        <span>0</span>
+                        <span>{availablePoints}</span>
+                      </div>
+                    </div>
+
+                    <p className="text-green-600 text-lg">
+                      Using {Math.round(appliedRewardAmount * 100)} Points (Balance: {availablePoints - Math.round(appliedRewardAmount * 100)} Points)
+                    </p>
+                  </div>
+                </>
+              )}
             </div>
-
           </div>
 
           {/* Payment Options */}
