@@ -108,7 +108,7 @@ export default function SuccessPage() {
           </div>
           <div className="space-y-3 text-sm">
             <div className="flex justify-between">
-              <span className="text-gray-600">Order ID</span>
+              <span className="text-gray-600">Order Reference</span>
               <span className="font-medium">{orderDetails.orderId}</span>
             </div>
             <div className="flex justify-between">
