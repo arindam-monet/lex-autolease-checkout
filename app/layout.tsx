@@ -2,13 +2,16 @@
 import LayoutContainer from '@/components/layout-container';
 import './globals.css';
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
+import { Noto_Sans_Gothic } from 'next/font/google';
 
-const inter = Inter({ subsets: ['latin'] });
+const notoSansGothic = Noto_Sans_Gothic({
+  weight: '400',
+  subsets: ['latin'],
+})
 
 export const metadata: Metadata = {
-  title: 'Argos Checkout',
-  description: 'Argos checkout page',
+  title: 'Cavendish Online Checkout',
+  description: 'Cavendish online checkout page',
 };
 
 export default function RootLayout({
@@ -18,7 +21,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={notoSansGothic.className}>
         <LayoutContainer>
           {children}
         </LayoutContainer>

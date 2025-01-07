@@ -1,85 +1,63 @@
+'use client'
+
 import Link from "next/link"
-import { Menu, User, Heart, ShoppingCart, Search, Lock } from 'lucide-react'
-import { Input } from "@/components/ui/input"
+import { usePathname } from "next/navigation"
+import { Search, User } from 'lucide-react'
 import { Button } from "@/components/ui/button"
-import { cn } from "@/lib/utils"
+import Image from "next/image"
 
-interface NavbarProps {
-  variant?: 'default' | 'checkout'
-  cartCount?: number
-  showSearch?: boolean
-  className?: string
-}
+export function Navbar() {
+  const pathname = usePathname()
+  const isHomePage = pathname === '/'
 
-export function Navbar({
-  variant = 'default',
-  cartCount = 0,
-  showSearch = true,
-  className
-}: NavbarProps) {
   return (
-    <div className={cn(
-      "sticky top-0 bg-white z-50 border-b w-full",
-      className
-    )}>
-      <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-16">
-          {/* Logo */}
-          <Link href="/" className="flex items-center">
-            <div className="bg-red-600 p-2 rounded">
-              <span className="text-white font-bold">Argos</span>
-            </div>
-          </Link>
+    <div className="relative">
+      <nav className="bg-primary text-white relative z-10">
+        <div className="container mx-auto px-4 py-4">
+          <div className="flex items-center justify-between">
+            <Link href="/" className="flex flex-col">
+             <Image src={'/images/cavendish-logo.svg'} alt="Cavendish Online" width={130} height={50} />
+            </Link>
 
-          {variant === 'checkout' ? (
-            <div className="flex items-center gap-2">
-              <Lock className="h-4 w-4 text-gray-600" />
-              <span className="text-gray-600">Secure Checkout</span>
-            </div>
-          ) : (
-            <div className="flex items-center space-x-4">
-              <Button variant="ghost" size="icon" aria-label="Menu">
-                <Menu className="h-5 w-5" />
-              </Button>
-              <Button variant="ghost" size="icon" aria-label="Account">
-                <User className="h-5 w-5" />
-              </Button>
-              <Button variant="ghost" size="icon" aria-label="Wishlist">
-                <Heart className="h-5 w-5" />
-              </Button>
-              <Button variant="ghost" size="icon" className="relative" aria-label={`Cart with ${cartCount} items`}>
-                <ShoppingCart className="h-5 w-5" />
-                {cartCount > 0 && (
-                  <span className="absolute top-0 right-0 h-4 w-4 text-xs bg-red-600 text-white rounded-full flex items-center justify-center">
-                    {cartCount}
-                  </span>
-                )}
-              </Button>
-            </div>
-          )}
+            {isHomePage ? (
+              <>
+                {/* Navigation Links - Only shown on homepage */}
+                <div className="hidden lg:flex items-center space-x-8 text-sm">
+                  <Link href="/" className="text-white hover:text-gray-200">HOME</Link>
+                  <Link href="/services" className="text-white hover:text-gray-200">OUR SERVICES</Link>
+                  <Link href="/life-insurance" className="text-white hover:text-gray-200">LIFE INSURANCE</Link>
+                  <Link href="/income-protection" className="text-white hover:text-gray-200">INCOME PROTECTION</Link>
+                  <Link href="/about" className="text-white hover:text-gray-200">ABOUT US</Link>
+                  <Link href="/news" className="text-white hover:text-gray-200">LATEST NEWS</Link>
+                  <Link href="/contact" className="text-white hover:text-gray-200">CONTACT US</Link>
+                </div>
+
+                {/* Login and Search - Only shown on homepage */}
+                <div className="flex items-center space-x-4">
+                  <Button variant="ghost" size="icon">
+                    <User className="h-5 w-5" />
+                    <span className="sr-only">Login</span>
+                  </Button>
+                  <Button variant="ghost" size="icon">
+                    <Search className="h-5 w-5" />
+                    <span className="sr-only">Search</span>
+                  </Button>
+                </div>
+              </>
+            ) : (
+              // Contact info - Shown on other pages
+              <div className="flex flex-col items-end space-y-1">
+                <p className="text-lg">Unsure of your options?</p>
+                <p className="text-xl font-medium">Speak to an expert</p>
+                <a href="tel:01392455584" className="text-2xl font-bold hover:text-gray-200 transition-colors">
+                  01392 455 584
+                </a>
+              </div>
+            )}
+          </div>
         </div>
 
-        {/* Search Bar */}
-        {showSearch && (
-          <div className="py-2 pb-4">
-            <div className="relative">
-              <Input
-                type="search"
-                placeholder="Search products or brands"
-                className="w-full pl-4 pr-10"
-              />
-              <Button
-                size="icon"
-                variant="ghost"
-                className="absolute right-0 top-0 h-full"
-                aria-label="Search"
-              >
-                <Search className="h-4 w-4" />
-              </Button>
-            </div>
-          </div>
-        )}
-      </div>
+      </nav>
     </div>
   )
 }
