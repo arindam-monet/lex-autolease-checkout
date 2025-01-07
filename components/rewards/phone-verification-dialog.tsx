@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
@@ -32,6 +32,7 @@ export function PhoneVerificationDialog({
   const [requestId, setRequestId] = useState("");
   const [mobileNumber, setMobileNumber] = useState("");
   const [countryCode, setCountryCode] = useState("");
+  const [dialogTitle, setDialogTitle] = useState("Login to Cavendish Online");
 
   const phoneForm = useForm<PhoneFormData>({
     resolver: zodResolver(phoneSchema),
@@ -80,6 +81,15 @@ export function PhoneVerificationDialog({
     }
   };
 
+
+  useEffect(() => {
+    if (step === "phone") {
+      setDialogTitle("Login to Cavendish Online");
+    } else {
+      setDialogTitle("Verify your phone number");
+    }
+  }, [step])
+
   return (
     <Dialog open={open} onOpenChange={() => {
       setStep("phone");
@@ -89,22 +99,14 @@ export function PhoneVerificationDialog({
     }}>
       <DialogContent className="max-w-[425px]">
         <DialogHeader>
-          <div className="flex flex-col items-center py-6 space-y-2 mx-auto">
-            <Image src="/images/monetlogo.svg" alt="Monet Rewards" width={100} height={100} />
-
-            <h4 className="font-bold text-xl">Monet Rewards</h4>
-            <p className="text-sm text-gray-500">Redeem your points on every purchase and Save Monet</p>
-          </div>
-          <div>
-
-          </div>
+          <DialogTitle>{dialogTitle}</DialogTitle>
         </DialogHeader>
         <div className="w-full">
-        {step === "phone" ? (
-          <PhoneForm onSubmit={handleLoginSubmit} />
-        ) : (
-          <OtpForm onSubmit={handleOtpSubmit} />
-        )}
+          {step === "phone" ? (
+            <PhoneForm onSubmit={handleLoginSubmit} />
+          ) : (
+            <OtpForm onSubmit={handleOtpSubmit} />
+          )}
         </div>
       </DialogContent>
     </Dialog>
@@ -124,7 +126,7 @@ export function PhoneForm({ onSubmit }: LoginFormProps) {
   return (
     <Form {...form}>
 
-      <h3 className="mx-auto font-semibold py-2">Enter your phone number</h3>
+
 
       <form onSubmit={form.handleSubmit((data) => onSubmit(data.mobileNumber))}
         className="space-y-4 mx-auto">
@@ -165,8 +167,6 @@ export function OtpForm({ onSubmit }: OtpFormProps) {
 
   return (
     <Form {...form}>
-
-      <h3 className="mx-auto font-semibold py-2">Enter OTP</h3>
 
       <form onSubmit={form.handleSubmit((data) => onSubmit(data.otp))}
         className="space-y-4 w-full max-w-md mx-auto">

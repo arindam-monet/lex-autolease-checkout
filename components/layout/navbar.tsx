@@ -5,10 +5,28 @@ import { usePathname } from "next/navigation"
 import { Search, User } from 'lucide-react'
 import { Button } from "@/components/ui/button"
 import Image from "next/image"
+import { PhoneVerificationDialog } from "../rewards/phone-verification-dialog"
+import { useState } from "react"
+import { StreamResponse } from "@/types/consumer"
+import { RewardsApiClient } from "@/lib/api-client"
+import { useRewardsAuth } from "@/hooks/use-rewards-auth"
 
 export function Navbar() {
   const pathname = usePathname()
   const isHomePage = pathname === '/'
+
+  const {
+    apiClient,
+    handlePhoneVerified,
+    isVerified,
+    streamData,
+    setShowPhoneDialog,
+    setShowRewardsDialog,
+    setStreamData,
+    showPhoneDialog,
+    showRewardsDialog
+
+  } = useRewardsAuth('test');
 
   return (
     <div className="relative">
@@ -16,7 +34,7 @@ export function Navbar() {
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <Link href="/" className="flex flex-col">
-             <Image src={'/images/cavendish-logo.svg'} alt="Cavendish Online" width={130} height={50} />
+              <Image src={'/images/cavendish-logo.svg'} alt="Cavendish Online" width={130} height={50} />
             </Link>
 
             {isHomePage ? (
@@ -34,7 +52,9 @@ export function Navbar() {
 
                 {/* Login and Search - Only shown on homepage */}
                 <div className="flex items-center space-x-4">
-                  <Button variant="ghost" size="icon">
+                  <Button variant="ghost" size="icon"
+                    onClick={() => setShowPhoneDialog(true)}
+                  >
                     <User className="h-5 w-5" />
                     <span className="sr-only">Login</span>
                   </Button>
@@ -56,6 +76,16 @@ export function Navbar() {
             )}
           </div>
         </div>
+
+        <PhoneVerificationDialog
+          open={showPhoneDialog}
+          onClose={() =>
+            setShowPhoneDialog(false)
+          }
+          onVerified={handlePhoneVerified}
+          apiClient={apiClient}
+        />
+
 
       </nav>
     </div>

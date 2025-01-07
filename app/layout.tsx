@@ -3,6 +3,7 @@ import LayoutContainer from '@/components/layout-container';
 import './globals.css';
 import type { Metadata } from 'next';
 import { Noto_Sans_Gothic } from 'next/font/google';
+import MainLayoutWrapper from '@/components/main-layout-wrapper';
 
 const notoSansGothic = Noto_Sans_Gothic({
   weight: '400',
@@ -23,7 +24,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={notoSansGothic.className}>
         <LayoutContainer>
-          {children}
+          <MainLayoutWrapper>{children}</MainLayoutWrapper>
         </LayoutContainer>
       </body>
     </html>
