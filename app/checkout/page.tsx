@@ -30,13 +30,19 @@ export default function CheckoutPage() {
 
   const [useRewards, setUseRewards] = useState(availablePoints > 0)
 
-  const maxRedeemablePoints =  maxApplicablePoints(checkoutTotal);
+  const maxRedeemablePoints = Math.min(
+    maxApplicablePoints(checkoutTotal),
+    availablePoints
+  );
   const actualMaxPoints = Math.min(availablePoints, maxRedeemablePoints);
 
 
   // Calculate applied points based on percentage of max redeemable
-  const appliedPoints = Math.round((actualMaxPoints * rewardPercentage) / 90);
-  const appliedRewardAmount = appliedPoints / 10; // Convert points 
+  const appliedPoints = Math.min(
+    Math.round((maxRedeemablePoints * rewardPercentage) / 90),
+    availablePoints
+  );
+  const appliedRewardAmount = LBGtoGBP(appliedPoints);
 
 
   const handleProceedToPayment = async () => {
