@@ -59,87 +59,64 @@ export function PaymentOptions({ onPriceUpdate }: PaymentOptionsProps) {
             onShowPhoneDialog={setShowPhoneDialog}
           >
             <div className="border rounded-lg p-4 border-green-500">
-              <div className="flex items-center justify-between">
-                <div>
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="rewards" id="rewards" defaultChecked />
-                    <Label htmlFor="rewards" className="text-sm">Pay With Rewards</Label>
-                  </div>
-                  <p className="text-xs text-gray-500 ml-6">
-                    Powered by <span className="font-semibold">Monet</span>
+
+              <div className="space-y-4 ml-6">
+                <div className="bg-yellow-50 p-2 rounded-md">
+                  <h3 className="font-medium">LBG Loyalty Points</h3>
+                  <p className="text-sm text-gray-600">
+                    Points available: <span className="font-semibold">{storage.get('totalLloydsPoints')}</span>
+                  </p>
+                  <p className="text-sm text-blue-600">
+                    Points available for redemption: <span className="font-semibold">{storage.get('appliedRewardPoints')}</span>
                   </p>
                 </div>
-                <button
-                  onClick={handleViewOffers}
-                  className="text-blue-600 text-sm cursor-pointer hover:underline"
-                >
-                  View offers {appliedReward && "(1 applied)"}
-                </button>
-              </div>
 
-              {appliedReward && (
-                <div className="space-y-4 ml-6">
-                  <div className="bg-yellow-50 p-2 rounded-md">
-                    <h3 className="font-medium">LBG Loyalty Points</h3>
-                    <p className="text-sm text-gray-600">
-                      Points available: <span className="font-semibold">{storage.get('totalLloydsPoints')}</span>
-                    </p>
-                    <p className="text-sm text-blue-600">
-                      Points available for redemption: <span className="font-semibold">{storage.get('appliedRewardPoints')}</span>
-                    </p>
-                  </div>
+                <div className="space-y-2">
+                  <Label>Select reward amount</Label>
+                  <Slider
+                    value={[rewardPercentage]}
+                    onValueChange={([value]) => setRewardPercentage(value)}
+                    max={50}
+                    step={1}
+                    className="w-full"
+                  />
+                </div>
 
-                  <div className="space-y-2">
-                    <Label>Select reward amount</Label>
-                    <Slider
-                      value={[rewardPercentage]}
-                      onValueChange={([value]) => setRewardPercentage(value)}
-                      max={50}
-                      step={1}
-                      className="w-full"
-                    />
-                    {/* <div className="flex justify-between text-sm text-gray-600 w-full">
-                      <span>0%</span>
-                      <span>25%</span>
-                      <span>50%</span>
-                    </div> */}
-                  </div>
-
-                  <div className="bg-gray-50 p-4 rounded-md space-y-2">
-                    <h4 className="font-medium mb-2">Price Details</h4>
-                    <div className="space-y-2 text-sm">
-                      <div className="flex justify-between">
-                        <span>Bag Item (1 item)</span>
-                        <span>£{checkoutTotal.toFixed(2)}</span>
+                <div className="bg-gray-50 p-4 rounded-md space-y-2">
+                  <h4 className="font-medium mb-2">Price Details</h4>
+                  <div className="space-y-2 text-sm">
+                    <div className="flex justify-between">
+                      <span>Bag Item (1 item)</span>
+                      <span>£{checkoutTotal.toFixed(2)}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <div className="flex flex-col"><span>Reward points</span>
+                        {appliedReward && (
+                          <span className="text-xs text-green-600 block mt-1">
+                            {(storage.get('appliedRewardPoints'))} points applied
+                          </span>
+                        )}
                       </div>
-                      <div className="flex justify-between">
-                        <div className="flex flex-col"><span>Reward points</span>
-                          {appliedReward && (
-                            <span className="text-xs text-green-600 block mt-1">
-                              {(storage.get('appliedRewardPoints'))} points applied
-                            </span>
-                          )}
-                        </div>
-                        <span>-£{appliedRewardAmount.toFixed(2)}</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span>Shipping</span>
-                        <span>Free</span>
-                      </div>
-                      <div className="flex justify-between font-medium pt-2 border-t">
-                        <span>You pay</span>
-                        <span>£{finalPrice.toFixed(2)}</span>
-                      </div>
+                      <span>-£{appliedRewardAmount.toFixed(2)}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>Shipping</span>
+                      <span>Free</span>
+                    </div>
+                    <div className="flex justify-between font-medium pt-2 border-t">
+                      <span>You pay</span>
+                      <span>£{finalPrice.toFixed(2)}</span>
                     </div>
                   </div>
                 </div>
-              )}
+              </div>
+
             </div>
           </PayWithRewards>
 
           <div className="flex items-center justify-between space-x-2 border rounded-lg p-4">
             <div className="flex items-center space-x-2">
-              <RadioGroupItem value="card" id="card" />
+              {/* <RadioGroupItem value="card" id="card" /> */}
               <Label htmlFor="card" className="text-sm">Credit/Debit card</Label>
             </div>
             <div className="flex gap-2">

@@ -13,10 +13,13 @@ import {
 } from "@/components/ui/select"
 import { Checkbox } from "@/components/ui/checkbox"
 import { mockFormData, sourceOptions, reasonOptions } from "@/lib/mock-data"
+import { useRouter } from "next/navigation"
 
 export function FeePaymentForm() {
   const [formData, setFormData] = useState(mockFormData)
   const [agreed, setAgreed] = useState(false)
+
+  const router = useRouter();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
@@ -25,7 +28,7 @@ export function FeePaymentForm() {
       return
     }
     console.log("Form submitted:", formData)
-    // Handle form submission
+    router.push('/checkout');
   }
 
   return (

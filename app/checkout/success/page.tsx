@@ -7,6 +7,7 @@ import { formatCurrency, formatTransactionId } from '@/lib/utils'
 import Image from 'next/image'
 import { Navbar } from '@/components/layout/navbar'
 import { storage } from '@/lib/storage'
+import { Button } from '@/components/ui/button'
 
 interface ProductDetails {
   name: string
@@ -85,9 +86,6 @@ export default function SuccessPage() {
 
   return (
     <>
-      <Navbar
-
-      />
       <div className="max-w-3xl mx-auto p-6">
         {/* Success Header */}
         <div className="text-center mb-12">
@@ -97,38 +95,10 @@ export default function SuccessPage() {
             </div>
           </div>
           <h1 className="text-3xl font-bold mb-2">Payment Successful!</h1>
-          <p className="text-gray-600">Thank you for your purchase</p>
+          <p className="text-gray-600">A copy of your order confirmation has been mailed to ritikagarud.work@gmail.com</p>
         </div>
 
-        <div className="bg-white rounded-lg shadow-md p-6 mb-6">
-          <div className="flex items-center gap-2 mb-4">
-            <Receipt className="h-5 w-5 text-gray-500" />
-            <h2 className="text-lg font-semibold">Product Details</h2>
-          </div>
-          <div className="flex gap-4">
-            <div className="flex-shrink-0">
-              <Image
-                src={orderDetails.product.image}
-                alt={orderDetails.product.name}
-                width={100}
-                height={100}
-                className="rounded-md"
-              />
-            </div>
-            <div className="flex-1">
-              <h3 className="font-medium">{orderDetails.product.name}</h3>
-              <p className="text-sm text-gray-500">{orderDetails.product.sku}</p>
-              <div className="mt-2 text-sm">
-                <span className="text-gray-600">Quantity: </span>
-                <span className="font-medium">{orderDetails.product.quantity}</span>
-              </div>
-              <div className="mt-1 text-sm">
-                <span className="text-gray-600">Price: </span>
-                <span className="font-medium">{formatCurrency(orderDetails.product.price)}</span>
-              </div>
-            </div>
-          </div>
-        </div>
+
 
         {/* Order Details Card */}
         <div className="bg-white rounded-lg shadow-md p-6 mb-6">
@@ -198,12 +168,12 @@ export default function SuccessPage() {
         </div>
         {/* Action Button */}
         <div className="text-center mt-8">
-          <button
+          <Button
             onClick={() => router.push('/')}
-            className="bg-black text-white px-8 py-3 rounded-lg hover:bg-gray-800 transition-colors"
+
           >
-            Continue Shopping
-          </button>
+            Get another quote
+          </Button>
         </div>
       </div>
     </>
