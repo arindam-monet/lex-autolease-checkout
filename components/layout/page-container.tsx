@@ -36,27 +36,23 @@ export function PageContainer({
   }
 
   return (
-      <div className={cn(
-        "min-h-screen flex flex-col",
-        variant === 'checkout' && "bg-gray-50",
-        className
-      )}>
-        <Navbar
-          variant={variant === 'checkout' ? 'checkout' : 'default'}
-          cartCount={cartCount}
-          showSearch={showSearch}
-        />
+    <div className={cn(
+      "min-h-screen flex flex-col",
+      variant === 'checkout' && "bg-gray-50",
+      className
+    )}>
+      <Navbar
 
-        <main className="flex-1 container mx-auto px-2 py-6 pb-24">
-          {children}
-        </main>
+      />
 
-        <Footer
-          variant={variant}
-          total={total}
-          onProceed={handleProceed}
-        />
-      </div>
+      <main className="flex-1 container mx-auto px-2 py-6 pb-24">
+        {children}
+      </main>
+
+      <Footer
+
+      />
+    </div>
   )
 }
 

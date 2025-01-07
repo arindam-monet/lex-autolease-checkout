@@ -11,7 +11,7 @@ export function Hero() {
                             LIFE INSURANCE
                         </div>
                         <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900">
-                            We're committed to providing our lowest possible premiums
+                            {`We're committed to providing our lowest possible premiums`}
                         </h1>
                         <p className="text-lg text-gray-600">
                             When you buy online, we aim to achieve these low premiums by

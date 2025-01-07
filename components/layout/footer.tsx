@@ -55,7 +55,7 @@ export function Footer() {
 
         {/* Help Section */}
         <div className="bg-white p-6 rounded-lg shadow-sm mb-8">
-          <h2 className="text-2xl font-bold mb-2">We're here to help</h2>
+          <h2 className="text-2xl font-bold mb-2">{`We're here to help`}</h2>
           <p className="text-gray-600 mb-4">
             Our friendly team are on hand to provide any help you may need.
           </p>

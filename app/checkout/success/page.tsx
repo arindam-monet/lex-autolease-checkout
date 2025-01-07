@@ -86,8 +86,7 @@ export default function SuccessPage() {
   return (
     <>
       <Navbar
-        variant="checkout"
-        showSearch={false}
+
       />
       <div className="max-w-3xl mx-auto p-6">
         {/* Success Header */}
