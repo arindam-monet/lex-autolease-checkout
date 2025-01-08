@@ -83,10 +83,11 @@ export function Navbar() {
           open={showPhoneDialog}
           onClose={() => {
             setShowPhoneDialog(false);
+          }}
+          onVerified={() => {
             router.push('/fee-payment');
-          }
-          }
-          onVerified={handlePhoneVerified}
+            handlePhoneVerified();
+          }}
           apiClient={apiClient}
         />
 
