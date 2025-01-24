@@ -4,15 +4,31 @@ import './globals.css';
 import type { Metadata } from 'next';
 import { Noto_Sans_Gothic } from 'next/font/google';
 import MainLayoutWrapper from '@/components/main-layout-wrapper';
+import localFont from 'next/font/local'
 
 const notoSansGothic = Noto_Sans_Gothic({
   weight: '400',
   subsets: ['latin'],
 })
 
+const lexJoey = localFont({
+  src: [
+    {
+      path: './fonts/Lex-Joey-Regular.woff',
+      style: 'normal',
+      weight: '400',
+    },
+    {
+      path: './fonts/Lex-Joey-Bold.woff',
+      style: 'normal',
+      weight: '700',
+    }
+  ],
+})
+
 export const metadata: Metadata = {
-  title: 'Cavendish Online Checkout',
-  description: 'Cavendish online checkout page',
+  title: 'Lex auto lease Checkout',
+  description: 'Lex autolease checkout page',
 };
 
 export default function RootLayout({
@@ -22,7 +38,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={notoSansGothic.className}>
+      <body className={lexJoey.className}>
         <LayoutContainer>
           <MainLayoutWrapper>{children}</MainLayoutWrapper>
         </LayoutContainer>
