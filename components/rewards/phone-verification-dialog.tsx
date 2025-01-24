@@ -13,6 +13,9 @@ import { parsePhoneNumber } from "react-phone-number-input"
 import { InputOTP, InputOTPGroup, InputOTPSlot } from "../ui/input-otp"
 import { storage } from "@/lib/storage"
 import Image from "next/image"
+import { Label } from "../ui/label"
+import Link from "next/link"
+import { Checkbox } from "../ui/checkbox"
 
 interface PhoneVerificationDialogProps {
   open: boolean
@@ -125,9 +128,6 @@ export function PhoneForm({ onSubmit }: LoginFormProps) {
 
   return (
     <Form {...form}>
-
-
-
       <form onSubmit={form.handleSubmit((data) => onSubmit(data.mobileNumber))}
         className="space-y-4 mx-auto">
         <FormField
@@ -135,6 +135,7 @@ export function PhoneForm({ onSubmit }: LoginFormProps) {
           name="mobileNumber"
           render={({ field }) => (
             <FormItem>
+                <Label htmlFor="mobileNumber">Mobile Number</Label>
               <FormControl>
                 <PhoneInput
                   className="text-sm lg:text-lg"
@@ -147,7 +148,39 @@ export function PhoneForm({ onSubmit }: LoginFormProps) {
             </FormItem>
           )}
         />
-        <Button type="submit" className="w-full">
+
+        <FormField
+          control={form.control}
+          name="acceptTerms"
+          render={({ field }) => (
+            <FormItem className="flex flex-row items-start space-x-3 space-y-0">
+              <FormControl>
+                <Checkbox
+                  checked={field.value}
+                  onCheckedChange={field.onChange}
+                />
+              </FormControl>
+              <div className="space-y-1 leading-none">
+                <FormLabel className="text-sm text-muted-foreground">
+                  I agree to the{" "}
+                  <Link href="/privacy" className="text-primary hover:underline">
+                    Privacy Policy
+                  </Link>{" "}
+                  and{" "}
+                  <Link href="/terms" className="text-primary hover:underline">
+                    Terms of Service
+                  </Link>
+                </FormLabel>
+                <FormMessage />
+              </div>
+            </FormItem>
+          )}
+        />
+        <Button
+          type="submit"
+          className="w-full"
+          disabled={!form.formState.isValid}
+        >
           Send OTP
         </Button>
       </form>

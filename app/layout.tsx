@@ -37,8 +37,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body className={lexJoey.className}>
+    <html lang="en" suppressHydrationWarning>
+      <body className={lexJoey.className} suppressHydrationWarning>
         <LayoutContainer>
           <MainLayoutWrapper>{children}</MainLayoutWrapper>
         </LayoutContainer>

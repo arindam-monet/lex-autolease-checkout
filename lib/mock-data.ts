@@ -11,7 +11,7 @@ export const mockFormData = {
     town: "Exeter",
     policiesCount: "1",
     discountCode: "",
-    feeDue: "200.00",
+    feeDue: "480.00",
     source: "Google Search",
     reason: "Better rates"
   }

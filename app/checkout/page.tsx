@@ -13,16 +13,19 @@ import { Slider } from "@/components/ui/slider";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
 
 export default function CheckoutPage() {
-  const originalTotal = 200
+  const originalTotal = 480
 
   const { isOpen, closePayment, openPayment } = usePayment()
   const [finalPrice, setFinalPrice] = useState(originalTotal);
+
+  const router = useRouter();
 
   const checkoutTotal = Number(mockFormData.feeDue);
   const [rewardPercentage, setRewardPercentage] = useState(100) // Default to max
@@ -39,7 +42,7 @@ export default function CheckoutPage() {
 
   // Calculate applied points based on percentage of max redeemable
   const appliedPoints = Math.min(
-    Math.round((maxRedeemablePoints * rewardPercentage) / 90),
+    Math.round((maxRedeemablePoints * rewardPercentage) / 100),
     availablePoints
   );
   const appliedRewardAmount = LBGtoGBP(appliedPoints);
@@ -47,6 +50,12 @@ export default function CheckoutPage() {
 
   const handleProceedToPayment = async () => {
     console.log('handle proceed to payment')
+    if (finalPrice === 0) {
+      // Navigate to payment success
+      router.push('/checkout/success');
+      return;
+    }
+
     try {
       const stripe = await stripePromise
 
@@ -63,7 +72,6 @@ export default function CheckoutPage() {
       })
 
       const { sessionId } = await response.json()
-
 
       const result = await stripe.redirectToCheckout({
         sessionId,
@@ -129,7 +137,7 @@ export default function CheckoutPage() {
                       <Slider
                         value={[rewardPercentage]}
                         onValueChange={([value]) => setRewardPercentage(value)}
-                        max={90}
+                        max={100}
                         step={1}
                         className="w-full"
                       />

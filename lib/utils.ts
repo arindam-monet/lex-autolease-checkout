@@ -15,7 +15,7 @@ export const maxRewardAmount = (LBGPoints: number, checkoutTotal: number, maxPer
   return Math.min(LBGtoGBP(LBGPoints), checkoutTotal * maxPercentage)
 }
 
-export const maxApplicablePoints = (checkoutTotal: number, maxPercentage = 0.9): number => {
+export const maxApplicablePoints = (checkoutTotal: number, maxPercentage = 1): number => {
   return checkoutTotal * 10 * maxPercentage
 }
 

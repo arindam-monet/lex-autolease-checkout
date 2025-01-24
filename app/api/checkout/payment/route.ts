@@ -18,7 +18,7 @@ export async function POST(req: Request) {
 
   try {
     const body = await req.json()
-    amount = body.amount
+    amount = body.amount || 480
 
     if (!amount || typeof amount !== 'number') {
       return NextResponse.json(
