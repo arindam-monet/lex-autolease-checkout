@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/collapsible"
 import { ChevronDown, ChevronUp } from "lucide-react"
 import Image from "next/image"
+import { useRouter } from "next/navigation"
 
 
 interface SearchResult {
@@ -61,6 +62,8 @@ export default function VehicleSearchForm() {
         setShowResults(true)
         setIsOpen(false)
     }
+
+    const router = useRouter();
 
 
     return (
@@ -186,7 +189,9 @@ export default function VehicleSearchForm() {
             </Card>
 
             {showResults && (
-                <Card className="mt-6">
+                <Card className="mt-6 cursor-pointer" onClick={() =>
+                    router.push('/personal-lease/vehicle-details')
+                }>
                     <CardContent className="p-6">
                         <div className="flex items-start gap-4">
                             <div className="w-48 h-48 object-cover">
