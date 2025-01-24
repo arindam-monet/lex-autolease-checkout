@@ -260,9 +260,9 @@ export default function VehicleDetails() {
                         <Star className="w-5 h-5 fill-muted stroke-muted-foreground" />
                     </div>
                     <p className="mb-4">
-                        The A1 is a fine car – it's great to drive, comfortable to sit in and is available with lots of big car
+                        {` The A1 is a fine car – it's great to drive, comfortable to sit in and is available with lots of big car
                         options. However, if you can live without a posh badge, the Peugeot 208 and VW Polo offer slightly more for
-                        less.
+                        less.`}
                     </p>
                     <div className="grid md:grid-cols-2 gap-4">
                         <div>
@@ -288,16 +288,16 @@ export default function VehicleDetails() {
                             Office: 25 Gresham Street, London, EC2V 7HN.
                         </p>
                         <p>
-                            Subject to status. Must be 18 and over. Prices correct at date of publication (24/01/2025). These offers
+                            {`  Subject to status. Must be 18 and over. Prices correct at date of publication (24/01/2025). These offers
                             are subject to availability. If the vehicle exceeds the contract mileage, an excess mileage charge will
                             apply. You will not own the vehicle and it should be returned to us in a condition that reflects "fair
-                            wear and tear" guidelines, otherwise charges may apply.
+                            wear and tear" guidelines, otherwise charges may apply.`}
                         </p>
                         <p>
-                            Maintenance includes routine servicing, tyres, replacement parts and repairs due to fair wear and tear.
+                            {` Maintenance includes routine servicing, tyres, replacement parts and repairs due to fair wear and tear.
                             Repairs or replacements from accidental/malicious damage and damage caused by driver misuse/abuse are
                             excluded. The vehicle must be serviced in accordance with manufacturer's guidelines and by an approved
-                            service dealer.
+                            service dealer.`}
                         </p>
                     </div>
 
