@@ -14,6 +14,7 @@ import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { RewardsApiClient } from "@/lib/api-client";
 
 
 
@@ -26,6 +27,7 @@ export default function CheckoutPage() {
   const [finalPrice, setFinalPrice] = useState(originalTotal);
 
   const router = useRouter();
+  const apiClient = new RewardsApiClient('apikey');
 
   const checkoutTotal = Number(mockFormData.feeDue);
   const [rewardPercentage, setRewardPercentage] = useState(100) // Default to max
@@ -38,6 +40,7 @@ export default function CheckoutPage() {
     availablePoints
   );
   const actualMaxPoints = Math.min(availablePoints, maxRedeemablePoints);
+  const appliedRewardPoints = Number(storage.get('appliedRewardPoints')) || 0
 
 
   // Calculate applied points based on percentage of max redeemable
@@ -52,7 +55,24 @@ export default function CheckoutPage() {
     console.log('handle proceed to payment')
     if (finalPrice === 0) {
       // Navigate to payment success
+
+
+
+      const redeemPointsRes = await apiClient.redeemPoints({
+        "apiKey": "sk_test_4eC39HqLyjWDarjtT1zdp7dc",
+        "secretKey": "sk_secret_Qlkfd8dfsdfs23fsdfs2323fsdf3",
+        "brandName": "LLOYD",
+        "totalPoints": (appliedRewardPoints),
+        "consumerId": storage.get('consumerId') || '',
+      })
+
+      const txnId = redeemPointsRes.id;
+      storage.set('txnId', txnId);
+
+      console.log(redeemPointsRes, 'result')
+
       router.push('/checkout/success');
+
       return;
     }
 
