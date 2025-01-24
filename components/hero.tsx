@@ -1,6 +1,5 @@
 import Image from "next/image";
 import React from "react";
-import { Button } from "./ui/button";
 
 const Hero: React.FC = () => {
     return (
@@ -14,9 +13,6 @@ const Hero: React.FC = () => {
                     A leading provider of personal and business vehicle leasing services in the UK.
                 </p>
 
-                <Button variant={'secondary'} className="mt-8 text-lg w-48">
-                    Get Quote
-                </Button>
             </div>
 
             {/* Right Section - Image */}

@@ -32,7 +32,7 @@ export function PhoneVerificationDialog({
   const [requestId, setRequestId] = useState("");
   const [mobileNumber, setMobileNumber] = useState("");
   const [countryCode, setCountryCode] = useState("");
-  const [dialogTitle, setDialogTitle] = useState("Login to Cavendish Online");
+  const [dialogTitle, setDialogTitle] = useState("Login to Lex Autolease");
 
   const phoneForm = useForm<PhoneFormData>({
     resolver: zodResolver(phoneSchema),
@@ -84,7 +84,7 @@ export function PhoneVerificationDialog({
 
   useEffect(() => {
     if (step === "phone") {
-      setDialogTitle("Login to Cavendish Online");
+      setDialogTitle("Login to Lex Autolease");
     } else {
       setDialogTitle("Verify your phone number");
     }
