@@ -95,7 +95,7 @@ export default function SuccessPage() {
             </div>
           </div>
           <h1 className="text-3xl font-bold mb-2">Payment Successful!</h1>
-          <p className="text-gray-600">A copy of your order confirmation has been mailed to ritikagarud.work@gmail.com</p>
+          <p className="text-gray-600">A copy of your order confirmation has been mailed to haedarah.ali@monet.work</p>
         </div>
 
 
